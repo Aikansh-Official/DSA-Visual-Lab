@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+coverage/
+outputs/
+.idea/
+.DS_Store
+*.log
+.env*
+!.env.example
