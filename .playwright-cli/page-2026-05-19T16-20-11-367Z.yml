@@ -1,0 +1,122 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [ref=e13]
+    - button "Start Learning" [active] [ref=e14]: Start Learning
+  - generic [ref=e870]:
+    - img [ref=e872]
+    - generic [ref=e874]:
+      - generic [ref=e875]:
+        - img [ref=e876]
+        - heading "Buy Premium" [level=2] [ref=e879]
+      - paragraph [ref=e880]: Unlock more visual lessons, practice challenges, and advanced DSA labs at just 99rs.
+    - button "Close premium message" [ref=e881]:
+      - img [ref=e882]
+  - main [ref=e16]:
+    - generic [ref=e737]:
+      - generic [ref=e738]:
+        - generic [ref=e739]:
+          - generic [ref=e740]: Linear Data Structure
+          - heading "Stack Data Structure" [level=2] [ref=e741]
+          - paragraph [ref=e742]: Understand Last In, First Out (LIFO) using a stack of plates. A precise, linear data structure essential for parsing, backtracking, and memory management.
+        - img [ref=e748]:
+          - generic [ref=e753]: Plate 1
+          - generic [ref=e757]: Plate 2
+          - generic [ref=e761]: Plate 3
+          - generic [ref=e765]: Plate 4
+          - generic [ref=e769]: Plate 5
+          - generic [ref=e771]: TOP
+          - generic [ref=e773]: push()
+          - generic [ref=e774]: add to top
+          - generic [ref=e776]: pop()
+          - generic [ref=e777]: remove top
+          - generic [ref=e778]: LIFO mental model
+      - generic [ref=e779]:
+        - generic [ref=e781]:
+          - generic [ref=e782]:
+            - img [ref=e784]
+            - heading "Plate Stack Visualizer" [level=3] [ref=e786]
+          - generic [ref=e788]:
+            - generic [ref=e789]:
+              - img [ref=e790]
+              - generic [ref=e792]: Top
+            - generic [ref=e793]: Plate 3
+            - generic [ref=e794]: Plate 2
+            - generic [ref=e795]: Plate 1
+          - generic [ref=e796]:
+            - button "Push" [ref=e797]:
+              - img [ref=e798]
+              - text: Push
+            - button "Pop" [ref=e801]:
+              - img [ref=e802]
+              - text: Pop
+            - button "Peek" [ref=e805]:
+              - img [ref=e806]
+              - text: Peek
+          - generic [ref=e809]: Status:Initialization
+        - generic [ref=e810]:
+          - generic [ref=e811]:
+            - heading "The Core Idea" [level=3] [ref=e812]
+            - paragraph [ref=e813]: Imagine a stack of heavy plates in a cafeteria. You can only add a new plate to the top, and you can only remove the top plate. To reach the bottom plate, you must remove all the plates above it first.
+            - generic [ref=e814]:
+              - generic [ref=e815]:
+                - generic [ref=e816]: LIFO
+                - generic [ref=e817]: Last In, First Out
+              - generic [ref=e818]:
+                - generic [ref=e819]:
+                  - img [ref=e820]
+                  - generic [ref=e823]:
+                    - generic [ref=e824]: Push
+                    - generic [ref=e825]: Add item to top
+                - generic [ref=e826]:
+                  - img [ref=e827]
+                  - generic [ref=e830]:
+                    - generic [ref=e831]: Pop
+                    - generic [ref=e832]: Remove top item
+                - generic [ref=e833]:
+                  - img [ref=e834]
+                  - generic [ref=e837]:
+                    - generic [ref=e838]: Peek
+                    - generic [ref=e839]: View top item
+          - generic [ref=e840]:
+            - generic [ref=e841]:
+              - generic [ref=e842]:
+                - generic [ref=e843]:
+                  - generic [ref=e844]: stack.cpp
+                  - button "Copy code" [ref=e845]:
+                    - img [ref=e846]
+                - generic [ref=e849]:
+                  - button "JavaScript" [ref=e850]
+                  - button "C" [ref=e851]
+                  - button "C++" [ref=e852]
+                  - button "Java" [ref=e853]
+              - code [ref=e856]: "#include <stack> using namespace std; stack<int> plates; void pushPlate(int value) { plates.push(value); } int popPlate() { if (plates.empty()) return -1; int top = plates.top(); plates.pop(); return top; } int peek() { return plates.empty() ? -1 : plates.top(); }"
+            - generic [ref=e857]:
+              - generic [ref=e858]:
+                - generic [ref=e859]:
+                  - heading "Time Complexity" [level=4] [ref=e860]
+                  - paragraph [ref=e861]: Push, Pop, and Peek operations.
+                - generic [ref=e862]: O(1)
+              - generic [ref=e863]:
+                - generic [ref=e864]:
+                  - heading "Space Complexity" [level=4] [ref=e865]
+                  - paragraph [ref=e866]: For storing n elements.
+                - generic [ref=e867]: O(n)
+  - contentinfo [ref=e149]:
+    - generic [ref=e150]: DSA Visual Lab
+    - generic [ref=e151]:
+      - link "GitHub" [ref=e152] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e153] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e154] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e155] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e156]: © 2026 DSA Visual Lab. Engineered for precision.

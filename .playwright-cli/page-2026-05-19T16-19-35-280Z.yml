@@ -1,0 +1,122 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [active] [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [ref=e13]
+    - button "Start Learning" [ref=e14]: Start Learning
+  - main [ref=e16]:
+    - generic [ref=e158]:
+      - generic [ref=e159]:
+        - generic [ref=e160]:
+          - generic [ref=e161]: Linear Data Structure
+          - heading "Queue Data Structure" [level=2] [ref=e162]
+          - paragraph [ref=e163]: "Understand First In, First Out (FIFO) using a line of people at a ticket counter. A Queue operates exactly like a real-world line: the first person to arrive is the first one served."
+        - img [ref=e169]:
+          - generic [ref=e171]: FRONT
+          - generic [ref=e172]: REAR
+          - generic [ref=e176]: "1"
+          - generic [ref=e180]: "2"
+          - generic [ref=e184]: "3"
+          - generic [ref=e188]: "4"
+          - generic [ref=e192]: "5"
+          - generic [ref=e198]: FIFO queue
+          - generic [ref=e199]: first person served first
+          - generic [ref=e200]: enqueue at rear, dequeue at front
+      - generic [ref=e201]:
+        - generic [ref=e203]:
+          - generic [ref=e204]:
+            - generic [ref=e205]:
+              - img [ref=e207]
+              - heading "Queue Visualizer" [level=3] [ref=e210]
+            - generic [ref=e211]: "Status: Initialization"
+          - generic [ref=e213]:
+            - generic [ref=e214]:
+              - generic [ref=e215]: Front
+              - img [ref=e216]
+            - generic [ref=e218]: "10"
+            - generic [ref=e219]: "20"
+            - generic [ref=e220]:
+              - text: "30"
+              - generic [ref=e221]:
+                - img [ref=e223]
+                - generic [ref=e225]: Rear
+            - generic [ref=e226]:
+              - generic [ref=e227]: Flow
+              - img [ref=e228]
+          - generic [ref=e230]:
+            - button "Enqueue Person" [ref=e231]:
+              - img [ref=e232]
+              - text: Enqueue Person
+            - button "Dequeue Person" [ref=e235]:
+              - img [ref=e236]
+              - text: Dequeue Person
+            - button "Peek Front" [ref=e239]:
+              - img [ref=e240]
+              - text: Peek Front
+        - generic [ref=e243]:
+          - generic [ref=e244]:
+            - heading "Core Idea" [level=3] [ref=e245]
+            - paragraph [ref=e246]: A queue is a linear collection of elements that are maintained in a sequence and can be modified by the addition of entities at one end and the removal of entities from the other end.
+            - generic [ref=e247]:
+              - generic [ref=e248]: FIFO
+              - generic [ref=e249]: First In, First Out
+              - generic [ref=e250]: The element added first is the one to be removed first.
+          - generic [ref=e251]:
+            - heading "Operations" [level=3] [ref=e252]
+            - generic [ref=e253]:
+              - generic [ref=e254]:
+                - img [ref=e256]
+                - generic [ref=e259]:
+                  - generic [ref=e260]: Enqueue(item)
+                  - generic [ref=e261]: Adds to the rear
+              - generic [ref=e262]:
+                - img [ref=e264]
+                - generic [ref=e267]:
+                  - generic [ref=e268]: Dequeue()
+                  - generic [ref=e269]: Removes from front
+              - generic [ref=e270]:
+                - img [ref=e272]
+                - generic [ref=e275]:
+                  - generic [ref=e276]: Front / Peek()
+                  - generic [ref=e277]: Views the front item
+        - generic [ref=e278]:
+          - generic [ref=e279]:
+            - generic [ref=e280]:
+              - generic [ref=e281]:
+                - generic [ref=e282]: queue.js
+                - button "Copy code" [ref=e283]:
+                  - img [ref=e284]
+              - generic [ref=e287]:
+                - button "JavaScript" [ref=e288]
+                - button "C" [ref=e289]
+                - button "C++" [ref=e290]
+                - button "Java" [ref=e291]
+            - code [ref=e294]: "class Queue { constructor() { this.items = []; } enqueue(element) { this.items.push(element); } dequeue() { if (this.isEmpty()) return \"Underflow\"; return this.items.shift(); } front() { return this.items[0]; } isEmpty() { return this.items.length === 0; } }"
+          - generic [ref=e295]:
+            - generic [ref=e296]:
+              - generic [ref=e297]:
+                - heading "Time Complexity" [level=4] [ref=e298]
+                - paragraph [ref=e299]: Enqueue and Dequeue operations.
+              - generic [ref=e300]: O(1)
+            - generic [ref=e301]:
+              - generic [ref=e302]:
+                - heading "Space Complexity" [level=4] [ref=e303]
+                - paragraph [ref=e304]: For storing n elements.
+              - generic [ref=e305]: O(n)
+  - contentinfo [ref=e149]:
+    - generic [ref=e150]: DSA Visual Lab
+    - generic [ref=e151]:
+      - link "GitHub" [ref=e152] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e153] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e154] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e155] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e156]: © 2026 DSA Visual Lab. Engineered for precision.

@@ -1,0 +1,113 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [ref=e13]
+    - button "Start Learning" [ref=e14]: Start Learning
+  - main [ref=e16]:
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]: Linear Data Structure
+          - heading "Stack Data Structure" [level=2] [ref=e22]
+          - paragraph [ref=e23]: Understand Last In, First Out (LIFO) using a stack of plates. A precise, linear data structure essential for parsing, backtracking, and memory management.
+        - img [ref=e29]:
+          - generic [ref=e34]: Plate 1
+          - generic [ref=e38]: Plate 2
+          - generic [ref=e42]: Plate 3
+          - generic [ref=e46]: Plate 4
+          - generic [ref=e50]: Plate 5
+          - generic [ref=e52]: TOP
+          - generic [ref=e54]: push()
+          - generic [ref=e55]: add to top
+          - generic [ref=e57]: pop()
+          - generic [ref=e58]: remove top
+          - generic [ref=e59]: LIFO mental model
+      - generic [ref=e60]:
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - img [ref=e65]
+            - heading "Plate Stack Visualizer" [level=3] [ref=e67]
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - img [ref=e71]
+              - generic [ref=e73]: Top
+            - generic [ref=e74]: Plate 3
+            - generic [ref=e75]: Plate 2
+            - generic [ref=e76]: Plate 1
+          - generic [ref=e77]:
+            - button "Push" [ref=e78]:
+              - img [ref=e79]
+              - text: Push
+            - button "Pop" [ref=e82]:
+              - img [ref=e83]
+              - text: Pop
+            - button "Peek" [ref=e86]:
+              - img [ref=e87]
+              - text: Peek
+          - generic [ref=e90]: Status:Initialization
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - heading "The Core Idea" [level=3] [ref=e93]
+            - paragraph [ref=e94]: Imagine a stack of heavy plates in a cafeteria. You can only add a new plate to the top, and you can only remove the top plate. To reach the bottom plate, you must remove all the plates above it first.
+            - generic [ref=e95]:
+              - generic [ref=e96]:
+                - generic [ref=e97]: LIFO
+                - generic [ref=e98]: Last In, First Out
+              - generic [ref=e99]:
+                - generic [ref=e100]:
+                  - img [ref=e101]
+                  - generic [ref=e104]:
+                    - generic [ref=e105]: Push
+                    - generic [ref=e106]: Add item to top
+                - generic [ref=e107]:
+                  - img [ref=e108]
+                  - generic [ref=e111]:
+                    - generic [ref=e112]: Pop
+                    - generic [ref=e113]: Remove top item
+                - generic [ref=e114]:
+                  - img [ref=e115]
+                  - generic [ref=e118]:
+                    - generic [ref=e119]: Peek
+                    - generic [ref=e120]: View top item
+          - generic [ref=e121]:
+            - generic [ref=e122]:
+              - generic [ref=e123]:
+                - generic [ref=e124]:
+                  - generic [ref=e125]: stack.js
+                  - button "Copy code" [ref=e126]:
+                    - img [ref=e127]
+                - generic [ref=e130]:
+                  - button "JavaScript" [ref=e131]
+                  - button "C" [ref=e132]
+                  - button "C++" [ref=e133]
+                  - button "Java" [ref=e134]
+              - code [ref=e137]: "class Stack { constructor() { this.items = []; } push(element) { this.items.push(element); } pop() { if (this.isEmpty()) return \"Underflow\"; return this.items.pop(); } peek() { return this.items[this.items.length - 1]; } isEmpty() { return this.items.length === 0; } }"
+            - generic [ref=e138]:
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - heading "Time Complexity" [level=4] [ref=e141]
+                  - paragraph [ref=e142]: Push, Pop, and Peek operations.
+                - generic [ref=e143]: O(1)
+              - generic [ref=e144]:
+                - generic [ref=e145]:
+                  - heading "Space Complexity" [level=4] [ref=e146]
+                  - paragraph [ref=e147]: For storing n elements.
+                - generic [ref=e148]: O(n)
+  - contentinfo [ref=e149]:
+    - generic [ref=e150]: DSA Visual Lab
+    - generic [ref=e151]:
+      - link "GitHub" [ref=e152] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e153] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e154] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e155] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e156]: © 2026 DSA Visual Lab. Engineered for precision.

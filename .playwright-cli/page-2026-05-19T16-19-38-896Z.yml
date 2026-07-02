@@ -1,0 +1,144 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [active] [ref=e12]
+      - button "Trees" [ref=e13]
+    - button "Start Learning" [ref=e14]: Start Learning
+  - main [ref=e16]:
+    - generic [ref=e307]:
+      - generic [ref=e308]:
+        - generic [ref=e309]:
+          - generic [ref=e310]: Static/Dynamic Structure
+          - heading "Array Data Structure" [level=2] [ref=e311]
+          - paragraph [ref=e312]: The most fundamental data structure. A collection of elements identified by index or key, stored in contiguous memory locations for fast access.
+        - img [ref=e318]:
+          - generic [ref=e320]:
+            - generic [ref=e322]: "12"
+            - generic [ref=e323]: IDX 0
+          - generic [ref=e324]:
+            - generic [ref=e326]: "25"
+            - generic [ref=e327]: IDX 1
+          - generic [ref=e328]:
+            - generic [ref=e330]: "42"
+            - generic [ref=e331]: IDX 2
+          - generic [ref=e332]:
+            - generic [ref=e334]: "67"
+            - generic [ref=e335]: IDX 3
+          - generic [ref=e336]:
+            - generic [ref=e338]: "88"
+            - generic [ref=e339]: IDX 4
+          - generic [ref=e340]:
+            - generic [ref=e342]: "93"
+            - generic [ref=e343]: IDX 5
+          - generic [ref=e346]: access [2]
+          - generic [ref=e347]: contiguous memory cells
+      - generic [ref=e348]:
+        - generic [ref=e350]:
+          - generic [ref=e351]:
+            - generic [ref=e352]:
+              - img [ref=e354]
+              - generic [ref=e355]:
+                - heading "Array Memory Visualizer" [level=3] [ref=e356]
+                - paragraph [ref=e357]: Contiguous Blocks [0...N]
+            - generic [ref=e358]: "Status: Initialization"
+          - generic [ref=e360]:
+            - generic [ref=e361]:
+              - generic [ref=e362]: "10"
+              - generic [ref=e364]: IDX 0
+              - button [ref=e365]:
+                - img [ref=e366]
+            - generic [ref=e369]:
+              - generic [ref=e370]: "25"
+              - generic [ref=e372]: IDX 1
+              - button [ref=e373]:
+                - img [ref=e374]
+            - generic [ref=e377]:
+              - generic [ref=e378]: "42"
+              - generic [ref=e380]: IDX 2
+              - button [ref=e381]:
+                - img [ref=e382]
+            - generic [ref=e385]:
+              - generic [ref=e386]: "67"
+              - generic [ref=e388]: IDX 3
+              - button [ref=e389]:
+                - img [ref=e390]
+            - generic [ref=e393]:
+              - generic [ref=e394]: "88"
+              - generic [ref=e396]: IDX 4
+              - button [ref=e397]:
+                - img [ref=e398]
+            - button [ref=e401]:
+              - img [ref=e402]
+          - generic [ref=e403]:
+            - generic [ref=e404]:
+              - generic [ref=e405]:
+                - spinbutton [ref=e406]
+                - spinbutton [ref=e407]: "0"
+              - button "Insert" [ref=e408]:
+                - img [ref=e409]
+                - text: Insert
+            - generic [ref=e410]:
+              - spinbutton [ref=e411]
+              - button "Search" [ref=e412]:
+                - img [ref=e413]
+                - text: Search
+        - generic [ref=e416]:
+          - generic [ref=e417]:
+            - generic [ref=e418]:
+              - img [ref=e419]
+              - heading "Key Characteristics" [level=3] [ref=e421]
+            - list [ref=e422]:
+              - listitem [ref=e423]:
+                - generic [ref=e424]: Contiguous Memory
+                - generic [ref=e425]: Elements are stored next to each other.
+              - listitem [ref=e426]:
+                - generic [ref=e427]: Zero-Indexed
+                - generic [ref=e428]: Access starts at index [0].
+              - listitem [ref=e429]:
+                - generic [ref=e430]: Fixed/Dynamic Size
+                - generic [ref=e431]: Can be resized in some high-level languages.
+          - generic [ref=e432]:
+            - generic [ref=e433]: Primary Advantage
+            - generic [ref=e434]: O(1) Random Access
+            - paragraph [ref=e435]: Knowing the index allows for instantaneous data retrieval.
+        - generic [ref=e436]:
+          - generic [ref=e437]:
+            - generic [ref=e438]:
+              - generic [ref=e439]:
+                - generic [ref=e440]: array_ops.js
+                - button "Copy code" [ref=e441]:
+                  - img [ref=e442]
+              - generic [ref=e445]:
+                - button "JavaScript" [ref=e446]
+                - button "C" [ref=e447]
+                - button "C++" [ref=e448]
+                - button "Java" [ref=e449]
+            - code [ref=e452]: "const arr = [10, 20, 30]; arr.splice(index, 0, element); arr.splice(index, 1); const item = arr[index]; function search(val) { for (let i = 0; i < arr.length; i++) { if (arr[i] === val) return i; } return -1; }"
+          - generic [ref=e453]:
+            - generic [ref=e454]:
+              - generic [ref=e455]:
+                - heading "Access Time" [level=4] [ref=e456]
+                - paragraph [ref=e457]: Retrieving element by index.
+              - generic [ref=e458]: O(1)
+            - generic [ref=e459]:
+              - generic [ref=e460]:
+                - heading "Insertion/Deletion" [level=4] [ref=e461]
+                - paragraph [ref=e462]: Average case requires shifting elements.
+              - generic [ref=e463]: O(n)
+  - contentinfo [ref=e149]:
+    - generic [ref=e150]: DSA Visual Lab
+    - generic [ref=e151]:
+      - link "GitHub" [ref=e152] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e153] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e154] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e155] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e156]: © 2026 DSA Visual Lab. Engineered for precision.
