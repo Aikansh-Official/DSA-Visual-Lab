@@ -7,8 +7,8 @@ import { StackHeroArt } from './ConceptArt';
 import { stackSnippets } from '../codeSnippets';
 
 export default function StackView() {
-  const [items, setItems] = useState<string[]>(['Plate 1', 'Plate 2', 'Plate 3']);
-  const [lastAction, setLastAction] = useState<string>('Initialization');
+  const [items, setItems] = useState(['Plate 1', 'Plate 2', 'Plate 3']);
+  const [lastAction, setLastAction] = useState('Initialization');
 
   const push = () => {
     if (items.length >= 6) {
@@ -73,7 +73,7 @@ export default function StackView() {
             <div className="flex-grow flex flex-col items-center justify-end pb-12">
               <div className="w-full max-w-[240px] flex flex-col items-center justify-end gap-2 border-x-4 border-b-4 border-outline-variant p-6 rounded-b-2xl bg-surface/50 min-h-[320px] relative">
                 {/* Top Indicator */}
-                <div className="absolute -right-20 bottom-[calc(theme(spacing.2)*var(--items-count)+theme(spacing.12)*var(--items-count))] transition-all duration-500 flex items-center gap-2 text-primary-fixed" style={{ '--items-count': items.length } as any}>
+              <div className="absolute -right-20 bottom-[calc(theme(spacing.2)*var(--items-count)+theme(spacing.12)*var(--items-count))] transition-all duration-500 flex items-center gap-2 text-primary-fixed" style={{ '--items-count': items.length }}>
                   <ArrowLeft className="w-8 h-8 animate-pulse" />
                   <span className="font-mono text-sm uppercase tracking-wider font-bold">Top</span>
                 </div>

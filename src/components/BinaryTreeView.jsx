@@ -5,27 +5,18 @@ import CodeBlock from './CodeBlock';
 import ComplexityCard from './ComplexityCard';
 import { treeSnippets } from '../codeSnippets';
 
-interface TreeNode {
-  val: number;
-  left: TreeNode | null;
-  right: TreeNode | null;
-  id: string;
-  color?: 'red' | 'black';
-  balance?: number;
-}
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-const cloneTree = (node: TreeNode | null): TreeNode | null => {
+const cloneTree = (node) => {
   if (!node) return null;
   return { ...node, left: cloneTree(node.left), right: cloneTree(node.right) };
 };
 
-const getLayout = (node: TreeNode | null, x = 400, y = 50, offset = 180) => {
-  const nodes: (TreeNode & { x: number; y: number })[] = [];
-  const edges: { id: string; x1: number; y1: number; x2: number; y2: number }[] = [];
+const getLayout = (node, x = 400, y = 50, offset = 180) => {
+  const nodes = [];
+  const edges = [];
 
-  const traverse = (n: TreeNode | null, cx: number, cy: number, currentOffset: number) => {
+  const traverse = (n, cx, cy, currentOffset) => {
     if (!n) return;
     nodes.push({ ...n, x: cx, y: cy });
     if (n.left) {
@@ -46,8 +37,8 @@ const getLayout = (node: TreeNode | null, x = 400, y = 50, offset = 180) => {
   return { nodes, edges };
 };
 
-export default function BinaryTreeView({ type, onBack }: { type: string; onBack: () => void }) {
-  const [root, setRoot] = useState<TreeNode | null>(() => {
+export default function BinaryTreeView({ type, onBack }) {
+  const [root, setRoot] = useState(() => {
     return {
       val: 50, id: 'n50', color: 'black', balance: 0,
       left: { 
@@ -66,7 +57,7 @@ export default function BinaryTreeView({ type, onBack }: { type: string; onBack:
   const [insertVal, setInsertVal] = useState('');
   const [searchVal, setSearchVal] = useState('');
   const [lastAction, setLastAction] = useState('Tree initialized');
-  const [highlightedNodes, setHighlightedNodes] = useState<string[]>([]);
+  const [highlightedNodes, setHighlightedNodes] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const { nodes, edges } = getLayout(root);
@@ -90,7 +81,7 @@ export default function BinaryTreeView({ type, onBack }: { type: string; onBack:
 
     let currentTree = cloneTree(root);
     let curr = currentTree;
-    const highlights: string[] = [];
+    const highlights = [];
 
     while (curr) {
       highlights.push(curr.id);
@@ -141,7 +132,7 @@ export default function BinaryTreeView({ type, onBack }: { type: string; onBack:
     setLastAction(`Searching for ${val}...`);
 
     let curr = root;
-    const highlights: string[] = [];
+    const highlights = [];
 
     while (curr) {
       highlights.push(curr.id);

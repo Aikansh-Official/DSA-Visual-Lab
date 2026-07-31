@@ -1,12 +1,4 @@
-export type CodeLanguage = 'JavaScript' | 'C' | 'C++' | 'Java';
-
-export interface CodeSnippet {
-  language: CodeLanguage;
-  filename: string;
-  code: string;
-}
-
-export const stackSnippets: CodeSnippet[] = [
+export const stackSnippets = [
   {
     language: 'JavaScript',
     filename: 'stack.js',
@@ -101,7 +93,7 @@ class StackDemo {
   },
 ];
 
-export const queueSnippets: CodeSnippet[] = [
+export const queueSnippets = [
   {
     language: 'JavaScript',
     filename: 'queue.js',
@@ -197,7 +189,7 @@ class QueueDemo {
   },
 ];
 
-export const arraySnippets: CodeSnippet[] = [
+export const arraySnippets = [
   {
     language: 'JavaScript',
     filename: 'array_ops.js',
@@ -270,7 +262,7 @@ class ArrayDemo {
   },
 ];
 
-export const treeSnippets: CodeSnippet[] = [
+export const treeSnippets = [
   {
     language: 'JavaScript',
     filename: 'traverse.js',
@@ -329,7 +321,7 @@ class TreeSearch {
   },
 ];
 
-export const trieSnippets: CodeSnippet[] = [
+export const trieSnippets = [
   {
     language: 'JavaScript',
     filename: 'trieSearch.js',

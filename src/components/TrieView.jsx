@@ -5,17 +5,10 @@ import CodeBlock from './CodeBlock';
 import ComplexityCard from './ComplexityCard';
 import { trieSnippets } from '../codeSnippets';
 
-interface TrieNodeData {
-  char: string;
-  id: string;
-  isWord: boolean;
-  children: Record<string, TrieNodeData>;
-}
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-function computeLayout(root: TrieNodeData) {
-  function calcW(n: TrieNodeData & { w?: number }): number {
+function computeLayout(root) {
+  function calcW(n) {
     const keys = Object.keys(n.children);
     if (keys.length === 0) { n.w = 1; return 1; }
     let w = 0;
@@ -23,12 +16,12 @@ function computeLayout(root: TrieNodeData) {
     n.w = w;
     return w;
   }
-  calcW(root as TrieNodeData & { w?: number });
+  calcW(root);
 
-  const nodes: any[] = [];
-  const edges: any[] = [];
+  const nodes = [];
+  const edges = [];
   
-  function pos(n: any, x: number, wArea: number, y: number) {
+  function pos(n, x, wArea, y) {
     nodes.push({ ...n, x: x + wArea / 2, y });
     let currX = x;
     for (let k of Object.keys(n.children)) {
@@ -44,8 +37,8 @@ function computeLayout(root: TrieNodeData) {
   return { nodes, edges };
 }
 
-export default function TrieView({ onBack }: { onBack: () => void }) {
-  const [root, setRoot] = useState<TrieNodeData>({
+export default function TrieView({ onBack }) {
+  const [root, setRoot] = useState({
     char: '*', id: 'root', isWord: false,
     children: {
       'c': { char: 'c', id: 'c', isWord: false, children: {
@@ -64,7 +57,7 @@ export default function TrieView({ onBack }: { onBack: () => void }) {
   const [inputVal, setInputVal] = useState('');
   const [searchVal, setSearchVal] = useState('');
   const [lastAction, setLastAction] = useState('Trie initialized with "cat" and "dog"');
-  const [highlightedNodes, setHighlightedNodes] = useState<string[]>([]);
+  const [highlightedNodes, setHighlightedNodes] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const { nodes, edges } = computeLayout(root);
@@ -78,7 +71,7 @@ export default function TrieView({ onBack }: { onBack: () => void }) {
 
     let newRoot = JSON.parse(JSON.stringify(root));
     let curr = newRoot;
-    const highlights: string[] = ['root'];
+    const highlights = ['root'];
 
     setHighlightedNodes([...highlights]);
     await sleep(400);
@@ -113,7 +106,7 @@ export default function TrieView({ onBack }: { onBack: () => void }) {
     setLastAction(`Searching for "${word}"...`);
 
     let curr = root;
-    const highlights: string[] = ['root'];
+    const highlights = ['root'];
     setHighlightedNodes([...highlights]);
     await sleep(400);
 

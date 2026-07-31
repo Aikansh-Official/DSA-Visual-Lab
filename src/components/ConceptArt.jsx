@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ArtFrame = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+const ArtFrame = ({ children, className = '' }) => (
   <div className={`relative h-full w-full overflow-hidden bg-gradient-to-br from-blue-50 via-white to-cyan-50 ${className}`}>
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(37,99,235,0.16),transparent_28%),radial-gradient(circle_at_82%_72%,rgba(20,184,166,0.14),transparent_30%)]" />
     <div className="absolute inset-0 opacity-[0.22] [background-image:linear-gradient(#cbd5e1_1px,transparent_1px),linear-gradient(90deg,#cbd5e1_1px,transparent_1px)] [background-size:32px_32px]" />
@@ -8,7 +8,7 @@ const ArtFrame = ({ children, className = '' }: { children: React.ReactNode; cla
   </div>
 );
 
-const Label = ({ x, y, children }: { x: number; y: number; children: React.ReactNode }) => (
+const Label = ({ x, y, children }) => (
   <text x={x} y={y} textAnchor="middle" className="fill-slate-500 text-[11px] font-semibold uppercase tracking-wide">
     {children}
   </text>
@@ -21,13 +21,6 @@ const Node = ({
   color = '#ffffff',
   text = '#0f172a',
   stroke = '#2563eb',
-}: {
-  x: number;
-  y: number;
-  value: string;
-  color?: string;
-  text?: string;
-  stroke?: string;
 }) => (
   <g>
     <circle cx={x} cy={y} r="25" fill={color} stroke={stroke} strokeWidth="3" />
@@ -37,7 +30,7 @@ const Node = ({
   </g>
 );
 
-const Edge = ({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) => (
+const Edge = ({ x1, y1, x2, y2 }) => (
   <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
 );
 
@@ -256,7 +249,7 @@ export const TrieArt = () => (
   </ArtFrame>
 );
 
-const TreeSvg = ({ children }: { children: React.ReactNode }) => (
+const TreeSvg = ({ children }) => (
   <svg viewBox="0 0 400 320" className="h-full w-full">
     {children}
   </svg>

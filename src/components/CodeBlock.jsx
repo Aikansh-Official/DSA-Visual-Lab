@@ -1,15 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Copy } from 'lucide-react';
-import { CodeSnippet } from '../codeSnippets';
-
-interface CodeBlockProps {
-  code: string;
-  filename: string;
-  snippets?: CodeSnippet[];
-}
-
-export default function CodeBlock({ code, filename, snippets }: CodeBlockProps) {
-  const fallbackSnippets = useMemo<CodeSnippet[]>(() => [{ language: 'JavaScript', filename, code }], [code, filename]);
+export default function CodeBlock({ code, filename, snippets }) {
+  const fallbackSnippets = useMemo(() => [{ language: 'JavaScript', filename, code }], [code, filename]);
   const options = snippets?.length ? snippets : fallbackSnippets;
   const [activeLanguage, setActiveLanguage] = useState(options[0].language);
   const activeSnippet = options.find((snippet) => snippet.language === activeLanguage) ?? options[0];
