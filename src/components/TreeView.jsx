@@ -5,17 +5,7 @@ import BinaryTreeView from './BinaryTreeView';
 import TrieView from './TrieView';
 import { AVLArt, BSTArt, BTreeArt, BinaryTreeArt, RedBlackArt, TrieArt } from './ConceptArt';
 
-interface TreeCardProps {
-  title: string;
-  description: string;
-  visual: React.ReactNode;
-  icon: React.ReactNode;
-  complexity: string;
-  onSelect: () => void;
-  key?: number | string;
-}
-
-const TreeCard = ({ title, description, visual, icon, complexity, onSelect }: TreeCardProps) => (
+const TreeCard = ({ title, description, visual, icon, complexity, onSelect }) => (
   <motion.div 
     whileHover={{ y: -5 }}
     onClick={onSelect}
@@ -48,7 +38,7 @@ const TreeCard = ({ title, description, visual, icon, complexity, onSelect }: Tr
 );
 
 export default function TreeView() {
-  const [selectedTree, setSelectedTree] = useState<string | null>(null);
+  const [selectedTree, setSelectedTree] = useState(null);
 
   const trees = [
     {

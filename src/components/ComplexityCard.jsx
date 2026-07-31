@@ -1,13 +1,6 @@
 import React from 'react';
 
-interface ComplexityCardProps {
-  title: string;
-  description: string;
-  complexity: string;
-  isSpace?: boolean;
-}
-
-export default function ComplexityCard({ title, description, complexity, isSpace }: ComplexityCardProps) {
+export default function ComplexityCard({ title, description, complexity, isSpace }) {
   return (
     <div className="bg-surface-container rounded-lg border border-outline-variant p-6 flex justify-between items-center hover:border-primary-fixed transition-colors group">
       <div>

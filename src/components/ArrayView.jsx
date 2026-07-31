@@ -7,13 +7,13 @@ import { ArrayHeroArt } from './ConceptArt';
 import { arraySnippets } from '../codeSnippets';
 
 export default function ArrayView() {
-  const [elements, setElements] = useState<number[]>([10, 25, 42, 67, 88]);
-  const [lastAction, setLastAction] = useState<string>('Initialization');
-  const [highlightIdx, setHighlightIdx] = useState<number | null>(null);
+  const [elements, setElements] = useState([10, 25, 42, 67, 88]);
+  const [lastAction, setLastAction] = useState('Initialization');
+  const [highlightIdx, setHighlightIdx] = useState(null);
   const [searching, setSearching] = useState(false);
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [insertIdx, setInsertIdx] = useState<string>('0');
-  const [insertVal, setInsertVal] = useState<string>('');
+  const [searchValue, setSearchValue] = useState('');
+  const [insertIdx, setInsertIdx] = useState('0');
+  const [insertVal, setInsertVal] = useState('');
 
   const insertAt = () => {
     const idx = parseInt(insertIdx);
@@ -35,7 +35,7 @@ export default function ArrayView() {
     setInsertVal('');
   };
 
-  const deleteAt = (idx: number) => {
+  const deleteAt = (idx) => {
     const removed = elements[idx];
     const newArr = [...elements];
     newArr.splice(idx, 1);
@@ -251,7 +251,7 @@ export default function ArrayView() {
   );
 }
 
-const ArrowDown = ({ className }: { className?: string }) => (
+const ArrowDown = ({ className }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="24" 

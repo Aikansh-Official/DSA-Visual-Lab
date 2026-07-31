@@ -7,7 +7,7 @@ import QueueView from './components/QueueView';
 import ArrayView from './components/ArrayView';
 import TreeView from './components/TreeView';
 
-const Header = ({ currentTopic, onTopicChange, onStartLearning }: { currentTopic: DSATopic, onTopicChange: (topic: DSATopic) => void, onStartLearning: () => void }) => (
+const Header = ({ currentTopic, onTopicChange, onStartLearning }) => (
   <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 border-b border-outline-variant bg-surface/80 backdrop-blur-md shadow-[0_0_15px_rgba(56,222,187,0.1)]">
     <div className="flex items-center gap-2">
       <Terminal className="text-primary-fixed w-6 h-6" />
@@ -49,7 +49,7 @@ const Header = ({ currentTopic, onTopicChange, onStartLearning }: { currentTopic
   </header>
 );
 
-const PremiumToast = ({ onClose }: { onClose: () => void }) => (
+const PremiumToast = ({ onClose }) => (
   <motion.div
     initial={{ opacity: 0, y: -18, scale: 0.96 }}
     animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -93,7 +93,7 @@ const Footer = () => (
 );
 
 export default function App() {
-  const [currentTopic, setCurrentTopic] = useState<DSATopic>(DSATopic.STACK);
+  const [currentTopic, setCurrentTopic] = useState(DSATopic.STACK);
   const [showPremium, setShowPremium] = useState(false);
 
   return (

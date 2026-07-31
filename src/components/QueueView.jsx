@@ -7,8 +7,8 @@ import { QueueHeroArt } from './ConceptArt';
 import { queueSnippets } from '../codeSnippets';
 
 export default function QueueView() {
-  const [items, setItems] = useState<string[]>(['Person 10', 'Person 20', 'Person 30']);
-  const [lastAction, setLastAction] = useState<string>('Initialization');
+  const [items, setItems] = useState(['Person 10', 'Person 20', 'Person 30']);
+  const [lastAction, setLastAction] = useState('Initialization');
 
   const enqueue = () => {
     if (items.length >= 6) {
