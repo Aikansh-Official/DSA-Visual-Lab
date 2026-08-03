@@ -39,7 +39,7 @@ export default function StackView() {
   };
 
   return (
-    <div className="flex flex-col gap-16 py-8">
+    <div className="flex flex-col gap-12 py-8">
       {/* Hero Section */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col gap-6">
@@ -57,10 +57,10 @@ export default function StackView() {
       </section>
 
       {/* Interactive Lab */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <section className="grid grid-cols-1 lg:grid-cols-12 items-stretch gap-8">
         {/* Visualizer */}
-        <div className="lg:col-span-5 flex flex-col gap-6">
-          <div className="bg-surface-container rounded-2xl border border-outline-variant p-8 relative overflow-hidden group min-h-[500px] flex flex-col">
+        <div className="lg:col-span-5 flex">
+          <div className="bg-surface-container rounded-2xl border border-outline-variant p-8 relative overflow-hidden group min-h-[420px] flex-1 flex flex-col">
             <div className="absolute inset-0 bg-gradient-to-b from-primary-fixed/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             
             <div className="mb-8 flex items-center gap-3">
@@ -134,8 +134,8 @@ export default function StackView() {
         </div>
 
         {/* Core Info */}
-        <div className="lg:col-span-7 flex flex-col gap-8">
-          <div className="bg-surface-container rounded-2xl border border-outline-variant p-8">
+        <div className="lg:col-span-7 flex">
+          <div className="bg-surface-container rounded-2xl border border-outline-variant p-8 h-full">
             <h3 className="text-3xl font-bold text-primary mb-4">The Core Idea</h3>
             <p className="text-on-surface-variant leading-relaxed text-lg">
               Imagine a stack of heavy plates in a cafeteria. You can only add a new plate to the top, and you can only remove the top plate. To reach the bottom plate, you must remove all the plates above it first.
@@ -171,13 +171,14 @@ export default function StackView() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-            <CodeBlock code={stackSnippets[0].code} filename={stackSnippets[0].filename} snippets={stackSnippets} />
-            <div className="flex flex-col gap-6">
-              <ComplexityCard title="Time Complexity" description="Push, Pop, and Peek operations." complexity="O(1)" />
-              <ComplexityCard title="Space Complexity" description="For storing n elements." complexity="O(n)" isSpace />
-            </div>
-          </div>
+        </div>
+
+        <div className="lg:col-span-7">
+          <CodeBlock code={stackSnippets[0].code} filename={stackSnippets[0].filename} snippets={stackSnippets} />
+        </div>
+        <div className="lg:col-span-5 h-[360px] flex flex-col gap-6 [&>div]:flex-1">
+          <ComplexityCard title="Time Complexity" description="Push, Pop, and Peek operations." complexity="O(1)" />
+          <ComplexityCard title="Space Complexity" description="For storing n elements." complexity="O(n)" isSpace />
         </div>
       </section>
     </div>

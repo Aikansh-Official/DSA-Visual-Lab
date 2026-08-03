@@ -40,7 +40,7 @@ export default function QueueView() {
   };
 
   return (
-    <div className="flex flex-col gap-16 py-8">
+    <div className="flex flex-col gap-12 py-8">
       {/* Hero Section */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col gap-6">
@@ -58,10 +58,10 @@ export default function QueueView() {
       </section>
 
       {/* Interactive Lab */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <section className="grid grid-cols-1 lg:grid-cols-12 items-stretch gap-8">
         {/* Visualizer */}
-        <div className="lg:col-span-8 flex flex-col gap-6">
-          <div className="bg-surface-container rounded-2xl border border-outline-variant p-8 relative overflow-hidden group min-h-[450px] flex flex-col">
+        <div className="lg:col-span-8 flex">
+          <div className="bg-surface-container rounded-2xl border border-outline-variant p-8 relative overflow-hidden group min-h-[390px] flex-1 flex flex-col">
             <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             
             <div className="mb-12 flex items-center justify-between">
@@ -160,7 +160,7 @@ export default function QueueView() {
         </div>
 
         {/* Sidebar Info */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
+        <div className="lg:col-span-4 flex flex-col gap-6 [&>div]:flex-1">
           <div className="bg-surface-container rounded-2xl border border-outline-variant p-6">
             <h3 className="text-xl font-bold text-primary mb-4">Core Idea</h3>
             <p className="text-on-surface-variant text-sm leading-relaxed mb-6">
@@ -175,7 +175,7 @@ export default function QueueView() {
             </div>
           </div>
 
-          <div className="bg-surface-container rounded-2xl border border-outline-variant p-6 flex-grow">
+          <div className="bg-surface-container rounded-2xl border border-outline-variant p-6">
             <h3 className="text-xl font-bold text-primary mb-4">Operations</h3>
             <div className="flex flex-col gap-3">
                <div className="bg-surface-dim border border-outline-variant p-3 rounded-lg flex items-center gap-3">
@@ -210,12 +210,12 @@ export default function QueueView() {
         </div>
 
         {/* Code & Complexity */}
-        <div className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch pt-8">
+        <div className="lg:col-span-8">
            <CodeBlock code={queueSnippets[0].code} filename={queueSnippets[0].filename} snippets={queueSnippets} />
-           <div className="flex flex-col gap-6 justify-center">
-              <ComplexityCard title="Time Complexity" description="Enqueue and Dequeue operations." complexity="O(1)" />
-              <ComplexityCard title="Space Complexity" description="For storing n elements." complexity="O(n)" isSpace />
-           </div>
+        </div>
+        <div className="lg:col-span-4 h-[360px] flex flex-col gap-6 [&>div]:flex-1">
+          <ComplexityCard title="Time Complexity" description="Enqueue and Dequeue operations." complexity="O(1)" />
+          <ComplexityCard title="Space Complexity" description="For storing n elements." complexity="O(n)" isSpace />
         </div>
       </section>
     </div>

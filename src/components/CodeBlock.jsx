@@ -11,7 +11,7 @@ export default function CodeBlock({ code, filename, snippets }) {
   };
 
   return (
-    <div className="bg-[#0f172a] rounded-lg border border-[#334155] overflow-hidden flex flex-col h-full">
+    <div className="bg-[#0f172a] rounded-lg border border-[#334155] overflow-hidden flex flex-col h-[360px]">
       <div className="bg-[#1e293b] px-4 py-3 border-b border-[#334155] flex flex-col gap-3">
         <div className="flex justify-between items-center gap-3">
           <span className="text-xs font-mono text-slate-400">{activeSnippet.filename}</span>
@@ -37,7 +37,7 @@ export default function CodeBlock({ code, filename, snippets }) {
           </div>
         )}
       </div>
-      <div className="p-4 overflow-x-auto">
+      <div className="min-h-0 flex-1 overflow-auto p-4">
         <pre className="text-sm font-mono text-[#e2e8f0]">
           <code>{activeSnippet.code}</code>
         </pre>

@@ -66,7 +66,7 @@ export default function ArrayView() {
   };
 
   return (
-    <div className="flex flex-col gap-16 py-8">
+    <div className="flex flex-col gap-12 py-8">
       {/* Hero */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col gap-6">
@@ -84,9 +84,9 @@ export default function ArrayView() {
       </section>
 
       {/* Lab */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8 flex flex-col gap-6">
-          <div className="bg-surface rounded-2xl border border-outline p-8 relative overflow-hidden group min-h-[400px] flex flex-col shadow-sm">
+      <section className="grid grid-cols-1 lg:grid-cols-12 items-stretch gap-8">
+        <div className="lg:col-span-8 flex">
+          <div className="bg-surface rounded-2xl border border-outline p-8 relative overflow-hidden group min-h-[390px] flex-1 flex flex-col shadow-sm">
             <div className="mb-12 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-primary/10 rounded-xl">
@@ -212,7 +212,7 @@ export default function ArrayView() {
           </div>
         </div>
 
-        <div className="lg:col-span-4 flex flex-col gap-6">
+        <div className="lg:col-span-4 flex flex-col gap-6 [&>div]:flex-1">
           <div className="bg-surface rounded-2xl border border-outline p-6 flex flex-col gap-4">
              <div className="flex items-center gap-3 text-primary">
                <Info className="w-5 h-5" />
@@ -239,12 +239,12 @@ export default function ArrayView() {
           </div>
         </div>
 
-        <div className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch pt-8">
+        <div className="lg:col-span-8">
            <CodeBlock code={arraySnippets[0].code} filename={arraySnippets[0].filename} snippets={arraySnippets} />
-           <div className="flex flex-col gap-6 justify-center">
-              <ComplexityCard title="Access Time" description="Retrieving element by index." complexity="O(1)" />
-              <ComplexityCard title="Insertion/Deletion" description="Average case requires shifting elements." complexity="O(n)" isSpace />
-           </div>
+        </div>
+        <div className="lg:col-span-4 h-[360px] flex flex-col gap-6 [&>div]:flex-1">
+          <ComplexityCard title="Access Time" description="Retrieving element by index." complexity="O(1)" />
+          <ComplexityCard title="Insertion/Deletion" description="Average case requires shifting elements." complexity="O(n)" isSpace />
         </div>
       </section>
     </div>
