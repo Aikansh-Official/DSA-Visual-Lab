@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Network, GitBranch, Share2, Layers, Search, Database } from 'lucide-react';
 import { motion } from 'motion/react';
 import BinaryTreeView from './BinaryTreeView';
+import BTreeView from './BTreeView';
 import TrieView from './TrieView';
 import { AVLArt, BSTArt, BTreeArt, BinaryTreeArt, RedBlackArt, TrieArt } from './ConceptArt';
 
@@ -89,8 +90,10 @@ export default function TreeView() {
     return <TrieView onBack={() => setSelectedTree(null)} />;
   }
   
-  // Uses BinaryTreeView for all other trees. B-Tree is not fully implemented realistically 
-  // but acts as a placeholder or uses the underlying binary structure conceptually for this demo.
+  if (selectedTree === 'B-Tree') {
+    return <BTreeView onBack={() => setSelectedTree(null)} />;
+  }
+
   if (selectedTree) {
     return <BinaryTreeView type={selectedTree} onBack={() => setSelectedTree(null)} />;
   }

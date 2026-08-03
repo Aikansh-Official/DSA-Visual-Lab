@@ -321,6 +321,296 @@ class TreeSearch {
   },
 ];
 
+const binaryTreeSnippets = [
+  {
+    language: 'JavaScript',
+    filename: 'binaryTree.js',
+    code: `function insertLevelOrder(root, value) {
+  const fresh = { value, left: null, right: null };
+  if (!root) return fresh;
+
+  const queue = [root];
+  while (queue.length) {
+    const node = queue.shift();
+    if (!node.left) { node.left = fresh; break; }
+    if (!node.right) { node.right = fresh; break; }
+    queue.push(node.left, node.right);
+  }
+  return root;
+}`,
+  },
+  {
+    language: 'C',
+    filename: 'binary_tree.c',
+    code: `void insertLevelOrder(struct Node **root, int value) {
+  struct Node *fresh = newNode(value);
+  if (*root == NULL) { *root = fresh; return; }
+
+  struct Node *queue[100]; int front = 0, rear = 0;
+  queue[rear++] = *root;
+  while (front < rear) {
+    struct Node *node = queue[front++];
+    if (!node->left) { node->left = fresh; return; }
+    if (!node->right) { node->right = fresh; return; }
+    queue[rear++] = node->left;
+    queue[rear++] = node->right;
+  }
+}`,
+  },
+  {
+    language: 'C++',
+    filename: 'binary_tree.cpp',
+    code: `void insertLevelOrder(Node*& root, int value) {
+  Node* fresh = new Node{value, nullptr, nullptr};
+  if (!root) { root = fresh; return; }
+
+  queue<Node*> q; q.push(root);
+  while (!q.empty()) {
+    Node* node = q.front(); q.pop();
+    if (!node->left) { node->left = fresh; return; }
+    if (!node->right) { node->right = fresh; return; }
+    q.push(node->left); q.push(node->right);
+  }
+}`,
+  },
+  {
+    language: 'Java',
+    filename: 'BinaryTree.java',
+    code: `void insertLevelOrder(int value) {
+  Node fresh = new Node(value);
+  if (root == null) { root = fresh; return; }
+
+  Queue<Node> queue = new LinkedList<>();
+  queue.add(root);
+  while (!queue.isEmpty()) {
+    Node node = queue.remove();
+    if (node.left == null) { node.left = fresh; return; }
+    if (node.right == null) { node.right = fresh; return; }
+    queue.add(node.left); queue.add(node.right);
+  }
+}`,
+  },
+];
+
+const avlTreeSnippets = [
+  {
+    language: 'JavaScript',
+    filename: 'avlTree.js',
+    code: `function insert(node, value) {
+  if (!node) return new Node(value);
+  if (value < node.value) node.left = insert(node.left, value);
+  else if (value > node.value) node.right = insert(node.right, value);
+  else return node;
+
+  updateHeight(node);
+  const balance = height(node.left) - height(node.right);
+  if (balance > 1 && value < node.left.value) return rotateRight(node);
+  if (balance < -1 && value > node.right.value) return rotateLeft(node);
+  if (balance > 1 && value > node.left.value) {
+    node.left = rotateLeft(node.left); return rotateRight(node);
+  }
+  if (balance < -1 && value < node.right.value) {
+    node.right = rotateRight(node.right); return rotateLeft(node);
+  }
+  return node;
+}`,
+  },
+  {
+    language: 'C',
+    filename: 'avl_tree.c',
+    code: `struct Node* insert(struct Node* node, int value) {
+  if (node == NULL) return newNode(value);
+  if (value < node->value) node->left = insert(node->left, value);
+  else if (value > node->value) node->right = insert(node->right, value);
+  else return node;
+
+  updateHeight(node);
+  int balance = getBalance(node);
+  if (balance > 1 && value < node->left->value) return rotateRight(node);
+  if (balance < -1 && value > node->right->value) return rotateLeft(node);
+  if (balance > 1) { node->left = rotateLeft(node->left); return rotateRight(node); }
+  if (balance < -1) { node->right = rotateRight(node->right); return rotateLeft(node); }
+  return node;
+}`,
+  },
+  {
+    language: 'C++',
+    filename: 'avl_tree.cpp',
+    code: `Node* insert(Node* node, int value) {
+  if (!node) return new Node(value);
+  if (value < node->value) node->left = insert(node->left, value);
+  else if (value > node->value) node->right = insert(node->right, value);
+  else return node;
+
+  updateHeight(node);
+  int balance = getBalance(node);
+  if (balance > 1 && value < node->left->value) return rotateRight(node);
+  if (balance < -1 && value > node->right->value) return rotateLeft(node);
+  if (balance > 1) { node->left = rotateLeft(node->left); return rotateRight(node); }
+  if (balance < -1) { node->right = rotateRight(node->right); return rotateLeft(node); }
+  return node;
+}`,
+  },
+  {
+    language: 'Java',
+    filename: 'AVLTree.java',
+    code: `Node insert(Node node, int value) {
+  if (node == null) return new Node(value);
+  if (value < node.value) node.left = insert(node.left, value);
+  else if (value > node.value) node.right = insert(node.right, value);
+  else return node;
+
+  updateHeight(node);
+  int balance = getBalance(node);
+  if (balance > 1 && value < node.left.value) return rotateRight(node);
+  if (balance < -1 && value > node.right.value) return rotateLeft(node);
+  if (balance > 1) { node.left = rotateLeft(node.left); return rotateRight(node); }
+  if (balance < -1) { node.right = rotateRight(node.right); return rotateLeft(node); }
+  return node;
+}`,
+  },
+];
+
+const redBlackTreeSnippets = [
+  {
+    language: 'JavaScript',
+    filename: 'redBlackTree.js',
+    code: `function insert(node, value) {
+  if (!node) return new Node(value, 'red');
+  if (value < node.value) node.left = insert(node.left, value);
+  else if (value > node.value) node.right = insert(node.right, value);
+
+  if (isRed(node.right) && !isRed(node.left)) node = rotateLeft(node);
+  if (isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
+  if (isRed(node.left) && isRed(node.right)) flipColors(node);
+  return node;
+}
+
+root = insert(root, value);
+root.color = 'black';`,
+  },
+  {
+    language: 'C',
+    filename: 'red_black_tree.c',
+    code: `struct Node* insert(struct Node* root, int value) {
+  struct Node* fresh = newNode(value, RED);
+  root = bstInsert(root, fresh);
+  fixAfterInsert(&root, fresh);
+  root->color = BLACK;
+  return root;
+}
+
+/* fixAfterInsert uses rotations and recoloring so
+   the root is black and no red node has a red child. */`,
+  },
+  {
+    language: 'C++',
+    filename: 'red_black_tree.cpp',
+    code: `Node* insert(Node* root, int value) {
+  Node* fresh = new Node(value, RED);
+  root = bstInsert(root, fresh);
+  fixAfterInsert(root, fresh);
+  root->color = BLACK;
+  return root;
+}
+
+// fixAfterInsert rotates and recolors around the uncle node.`,
+  },
+  {
+    language: 'Java',
+    filename: 'RedBlackTree.java',
+    code: `Node insert(Node root, int value) {
+  Node fresh = new Node(value, RED);
+  root = bstInsert(root, fresh);
+  root = fixAfterInsert(root, fresh);
+  root.color = BLACK;
+  return root;
+}
+
+// fixAfterInsert performs recoloring and rotations.`,
+  },
+];
+
+const bTreeSnippets = [
+  {
+    language: 'JavaScript',
+    filename: 'bTree.js',
+    code: `function insert(root, value) {
+  if (root.keys.length === 2 * T - 1) {
+    const nextRoot = new BTreeNode(false);
+    nextRoot.children[0] = root;
+    splitChild(nextRoot, 0);
+    insertNonFull(nextRoot, value);
+    return nextRoot;
+  }
+  insertNonFull(root, value);
+  return root;
+}
+
+function splitChild(parent, index) {
+  const full = parent.children[index];
+  const right = new BTreeNode(full.leaf);
+  parent.keys.splice(index, 0, full.keys[T - 1]);
+  right.keys = full.keys.splice(T);
+  full.keys.length = T - 1;
+  parent.children.splice(index + 1, 0, right);
+}`,
+  },
+  {
+    language: 'C',
+    filename: 'b_tree.c',
+    code: `void insert(struct BTreeNode **root, int value) {
+  if ((*root)->count == 2 * T - 1) {
+    struct BTreeNode *next = newNode(0);
+    next->children[0] = *root;
+    splitChild(next, 0);
+    insertNonFull(next, value);
+    *root = next;
+  } else {
+    insertNonFull(*root, value);
+  }
+}`,
+  },
+  {
+    language: 'C++',
+    filename: 'b_tree.cpp',
+    code: `void insert(int value) {
+  if (root->keys.size() == 2 * T - 1) {
+    Node* next = new Node(false);
+    next->children.push_back(root);
+    splitChild(next, 0);
+    insertNonFull(next, value);
+    root = next;
+  } else {
+    insertNonFull(root, value);
+  }
+}`,
+  },
+  {
+    language: 'Java',
+    filename: 'BTree.java',
+    code: `void insert(int value) {
+  if (root.keys.size() == 2 * T - 1) {
+    Node next = new Node(false);
+    next.children.add(root);
+    splitChild(next, 0);
+    insertNonFull(next, value);
+    root = next;
+  } else {
+    insertNonFull(root, value);
+  }
+}`,
+  },
+];
+
+export const treeSnippetSets = {
+  'Binary Tree': binaryTreeSnippets,
+  'Binary Search Tree': treeSnippets,
+  'AVL Tree': avlTreeSnippets,
+  'Red-Black Tree': redBlackTreeSnippets,
+  'B-Tree': bTreeSnippets,
+};
+
 export const trieSnippets = [
   {
     language: 'JavaScript',
