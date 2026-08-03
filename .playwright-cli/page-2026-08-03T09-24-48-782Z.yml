@@ -1,0 +1,81 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [ref=e13]
+    - button "Start Learning" [ref=e14]
+  - main [ref=e16]:
+    - generic [ref=e429]:
+      - generic [ref=e430]:
+        - button "Back to tree types" [ref=e431]
+        - generic [ref=e434]:
+          - heading "Binary Search Tree Visualizer" [level=2] [ref=e435]
+          - paragraph [ref=e436]: Interactive Sandbox
+      - generic [ref=e437]:
+        - generic [ref=e439]:
+          - generic [ref=e440]:
+            - generic [ref=e441]: "Status: Finding 30 before deletion..."
+            - button "Clear" [ref=e442]
+          - generic [ref=e449]:
+            - generic [ref=e450]: "50"
+            - generic [ref=e451]: "25"
+            - generic [ref=e452]: "10"
+            - generic [ref=e453]: "35"
+            - generic [ref=e517]: "30"
+            - generic [ref=e454]: "75"
+            - generic [ref=e455]: "60"
+            - generic [ref=e456]: "90"
+          - generic [ref=e457]:
+            - heading "Behind the Scenes" [level=3] [ref=e463]
+            - list [ref=e510]:
+              - listitem [ref=e511]:
+                - generic [ref=e512]: "1"
+                - generic [ref=e513]: Compare 30 with 50. 30 is smaller, so move left to preserve the search-tree order.
+              - listitem [ref=e539]:
+                - generic [ref=e540]: "2"
+                - generic [ref=e541]: Compare 30 with 25. 30 is larger, so move right to preserve the search-tree order.
+          - generic [ref=e465]:
+            - generic [ref=e466]:
+              - spinbutton "Value" [ref=e467]
+              - button "Insert" [disabled] [ref=e468]
+            - generic [ref=e470]:
+              - spinbutton "Target" [ref=e471]
+              - button "Search" [disabled] [ref=e472]
+            - generic [ref=e476]:
+              - spinbutton "Target" [ref=e477]
+              - button "Delete" [disabled] [ref=e478]
+        - generic [ref=e482]:
+          - generic [ref=e483]:
+            - heading "Tree Mechanics" [level=3] [ref=e487]
+            - paragraph [ref=e488]: A BST keeps smaller values in the left subtree and larger values in the right subtree. The visualizer follows those comparisons for search and insertion.
+          - generic [ref=e489]:
+            - generic [ref=e490]:
+              - heading "Insertion and Search" [level=4] [ref=e491]
+              - paragraph [ref=e492]: Balanced trees are fast; a skewed BST can reach O(n).
+            - generic [ref=e493]: O(log n) expected
+          - generic [ref=e494]:
+            - generic [ref=e495]:
+              - generic [ref=e496]:
+                - generic [ref=e497]: traverse.js
+                - button "Copy code" [ref=e498]
+              - generic [ref=e502]:
+                - button "JavaScript" [ref=e503]
+                - button "C" [ref=e504]
+                - button "C++" [ref=e505]
+                - button "Java" [ref=e506]
+            - code [ref=e509]: "function traverse(node, target) { if (!node) return null; if (node.val === target) return node; if (target < node.val) return traverse(node.left, target); return traverse(node.right, target); }"
+  - contentinfo [ref=e149]:
+    - generic [ref=e150]: DSA Visual Lab
+    - generic [ref=e151]:
+      - link "GitHub" [ref=e152] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e153] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e154] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e155] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e156]: © 2026 DSA Visual Lab. Engineered for precision.

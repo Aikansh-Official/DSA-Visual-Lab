@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Crown, Sparkles, Terminal, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Crown, Moon, Sparkles, Sun, Terminal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { DSATopic } from './types';
 import StackView from './components/StackView';
@@ -7,7 +7,7 @@ import QueueView from './components/QueueView';
 import ArrayView from './components/ArrayView';
 import TreeView from './components/TreeView';
 
-const Header = ({ currentTopic, onTopicChange, onStartLearning }) => (
+const Header = ({ currentTopic, isDarkMode, onThemeToggle, onTopicChange, onStartLearning }) => (
   <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 border-b border-outline-variant bg-surface/80 backdrop-blur-md shadow-[0_0_15px_rgba(56,222,187,0.1)]">
     <div className="flex items-center gap-2">
       <Terminal className="text-primary-fixed w-6 h-6" />
@@ -39,13 +39,24 @@ const Header = ({ currentTopic, onTopicChange, onStartLearning }) => (
         Trees
       </button>
     </nav>
-    <button
-      onClick={onStartLearning}
-      className="relative overflow-hidden bg-primary-fixed text-on-primary-fixed px-6 py-2 rounded font-medium text-sm hover:neon-glow transition-all duration-300"
-    >
-      Start Learning
-      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-700 hover:translate-x-full" />
-    </button>
+    <div className="flex items-center gap-3">
+      <button
+        type="button"
+        onClick={onThemeToggle}
+        className="flex h-10 w-10 items-center justify-center rounded border border-outline-variant bg-surface-container text-on-surface-variant transition-colors hover:border-primary-fixed hover:text-primary-fixed"
+        aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+        title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+      >
+        {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      </button>
+      <button
+        onClick={onStartLearning}
+        className="relative overflow-hidden bg-primary-fixed text-on-primary-fixed px-6 py-2 rounded font-medium text-sm hover:neon-glow transition-all duration-300"
+      >
+        Start Learning
+        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-700 hover:translate-x-full" />
+      </button>
+    </div>
   </header>
 );
 
@@ -95,10 +106,25 @@ const Footer = () => (
 export default function App() {
   const [currentTopic, setCurrentTopic] = useState(DSATopic.STACK);
   const [showPremium, setShowPremium] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('dsa-visual-lab-theme');
+    return savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = isDarkMode ? 'dark' : 'light';
+    localStorage.setItem('dsa-visual-lab-theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   return (
     <div className="min-h-screen flex flex-col pt-24">
-      <Header currentTopic={currentTopic} onTopicChange={setCurrentTopic} onStartLearning={() => setShowPremium(true)} />
+      <Header
+        currentTopic={currentTopic}
+        isDarkMode={isDarkMode}
+        onThemeToggle={() => setIsDarkMode((currentMode) => !currentMode)}
+        onTopicChange={setCurrentTopic}
+        onStartLearning={() => setShowPremium(true)}
+      />
       <AnimatePresence>
         {showPremium && <PremiumToast onClose={() => setShowPremium(false)} />}
       </AnimatePresence>

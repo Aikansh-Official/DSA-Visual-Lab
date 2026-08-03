@@ -1,0 +1,130 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [active] [ref=e13]
+    - generic [ref=e14]:
+      - button "Switch to light mode" [ref=e161]
+      - button "Start Learning" [ref=e18]
+  - main [ref=e20]:
+    - generic [ref=e169]:
+      - generic [ref=e170]:
+        - heading "Tree Architectures" [level=2] [ref=e171]
+        - paragraph [ref=e172]: Explore the hierarchical world of trees, from simple binary structures to self-balancing systems optimized for performance.
+      - generic [ref=e173]:
+        - generic [ref=e174] [cursor=pointer]:
+          - generic [ref=e175]:
+            - img [ref=e181]:
+              - generic [ref=e188]: A
+              - generic [ref=e191]: B
+              - generic [ref=e194]: C
+              - generic [ref=e197]: D
+              - generic [ref=e200]: E
+              - generic [ref=e203]: F
+              - generic [ref=e206]: G
+              - generic [ref=e209]: each node has at most two children
+            - generic [ref=e211]: O(n)
+          - generic [ref=e219]:
+            - heading "Binary Tree" [level=3] [ref=e220]
+            - paragraph [ref=e221]: A hierarchical structure where each node has at most two children, referred to as the left child and the right child.
+            - button "See Visualization" [ref=e222]
+        - generic [ref=e223] [cursor=pointer]:
+          - generic [ref=e224]:
+            - img [ref=e230]:
+              - generic [ref=e237]: "50"
+              - generic [ref=e240]: "25"
+              - generic [ref=e243]: "75"
+              - generic [ref=e246]: "10"
+              - generic [ref=e249]: "35"
+              - generic [ref=e252]: "60"
+              - generic [ref=e255]: "90"
+              - generic [ref=e258]: < parent
+              - generic [ref=e259]: "> parent"
+              - generic [ref=e260]: left smaller, right larger
+            - generic [ref=e262]: O(log n)
+          - generic [ref=e268]:
+            - heading "Binary Search Tree" [level=3] [ref=e269]
+            - paragraph [ref=e270]: A binary tree where the left child is smaller and the right child is larger than the parent node, optimized for searching.
+            - button "See Visualization" [ref=e271]
+        - generic [ref=e272] [cursor=pointer]:
+          - generic [ref=e273]:
+            - img [ref=e279]:
+              - generic [ref=e284]: "30"
+              - generic [ref=e287]: "20"
+              - generic [ref=e290]: "40"
+              - generic [ref=e293]: "10"
+              - generic [ref=e296]: "25"
+              - generic [ref=e300]: BF 0
+              - generic [ref=e301]: self-balancing by height
+            - generic [ref=e303]: O(log n)
+          - generic [ref=e310]:
+            - heading "AVL Tree" [level=3] [ref=e311]
+            - paragraph [ref=e312]: A self-balancing binary search tree where the heights of the two child subtrees of any node differ by at most one.
+            - button "See Visualization" [ref=e313]
+        - generic [ref=e314] [cursor=pointer]:
+          - generic [ref=e315]:
+            - img [ref=e321]:
+              - generic [ref=e326]: "40"
+              - generic [ref=e329]: "20"
+              - generic [ref=e332]: "60"
+              - generic [ref=e335]: "10"
+              - generic [ref=e338]: "30"
+              - generic [ref=e341]: color rules keep searches fast
+            - generic [ref=e343]: O(log n)
+          - generic [ref=e352]:
+            - heading "Red-Black Tree" [level=3] [ref=e353]
+            - paragraph [ref=e354]: A kind of self-balancing binary search tree where each node has an extra bit for denoting the color of the node.
+            - button "See Visualization" [ref=e355]
+        - generic [ref=e356] [cursor=pointer]:
+          - generic [ref=e357]:
+            - img [ref=e363]:
+              - generic [ref=e365]: "20"
+              - generic [ref=e366]: "40"
+              - generic [ref=e367]: "70"
+              - generic [ref=e368]:
+                - generic [ref=e371]: "5"
+                - generic [ref=e372]: "12"
+              - generic [ref=e373]:
+                - generic [ref=e375]: "30"
+                - generic [ref=e376]: "55"
+              - generic [ref=e377]:
+                - generic [ref=e380]: "80"
+                - generic [ref=e381]: "95"
+              - generic [ref=e382]: multi-key nodes for large indexes
+            - generic [ref=e384]: O(log n)
+          - generic [ref=e391]:
+            - heading "B-Tree" [level=3] [ref=e392]
+            - paragraph [ref=e393]: A self-balancing search tree in which each node can contain more than one key and can have more than two children.
+            - button "See Visualization" [ref=e394]
+        - generic [ref=e395] [cursor=pointer]:
+          - generic [ref=e396]:
+            - img [ref=e402]:
+              - generic [ref=e405]: "*"
+              - generic [ref=e408]: c
+              - generic [ref=e411]: a
+              - generic [ref=e414]: t
+              - generic [ref=e417]: d
+              - generic [ref=e420]: o
+              - generic [ref=e423]: g
+              - generic [ref=e426]: word end
+              - generic [ref=e427]: word end
+            - generic [ref=e429]: O(k)
+          - generic [ref=e436]:
+            - heading "Trie (Prefix Tree)" [level=3] [ref=e437]
+            - paragraph [ref=e438]: An ordered tree data structure used to store a dynamic set or associative array where the keys are usually strings.
+            - button "See Visualization" [ref=e439]
+  - contentinfo [ref=e153]:
+    - generic [ref=e154]: DSA Visual Lab
+    - generic [ref=e155]:
+      - link "GitHub" [ref=e156] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e157] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e158] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e159] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e160]: © 2026 DSA Visual Lab. Engineered for precision.

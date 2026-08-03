@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Plus, Search as SearchIcon, Info, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Plus, Search as SearchIcon, Info, RefreshCw, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import CodeBlock from './CodeBlock';
 import ComplexityCard from './ComplexityCard';
+import TreeReasoningPanel from './TreeReasoningPanel';
 import { trieSnippets } from '../codeSnippets';
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -37,6 +38,48 @@ function computeLayout(root) {
   return { nodes, edges };
 }
 
+const trieDecisionSteps = (root, word, operation) => {
+  const steps = [{ id: 'root', text: `Start at the root. ${operation === 'insert' ? 'A Trie follows one edge for each character in the word.' : 'A Trie checks one edge for each character in the word.'}` }];
+  let node = root;
+  let prefix = '';
+  let reachedWordEnd = true;
+
+  for (const char of word) {
+    prefix += char;
+    const child = node.children[char];
+    if (!child) {
+      steps.push({ id: node.id, text: operation === 'insert' ? `There is no '${char}' edge after '${prefix.slice(0, -1)}', so create it and continue the new branch.` : `There is no '${char}' edge after '${prefix.slice(0, -1)}', so '${word}' is not stored in the Trie.` });
+      reachedWordEnd = false;
+      break;
+    }
+    steps.push({ id: child.id, text: `The '${char}' edge exists, so follow it. We have now matched the prefix '${prefix}'.` });
+    node = child;
+  }
+
+  if (node && prefix === word && reachedWordEnd) {
+    if (operation === 'insert') steps.push({ id: node.id, text: `Mark '${word}' as a complete word at this node. Existing prefixes remain shared with other words.` });
+    if (operation === 'search') steps.push({ id: node.id, text: node.isWord ? `'${word}' ends here and is marked as a full word.` : `'${word}' is only a prefix here, not a complete stored word.` });
+    if (operation === 'delete') steps.push({ id: node.id, text: node.isWord ? `Clear the word-end marker for '${word}'. Then prune a node only when no other word needs its branch.` : `'${word}' is only a prefix here, so there is no complete word to delete.` });
+  }
+
+  return steps;
+};
+
+const deleteWord = (node, word, depth = 0) => {
+  if (depth === word.length) {
+    if (!node.isWord) return false;
+    node.isWord = false;
+    return Object.keys(node.children).length === 0;
+  }
+
+  const char = word[depth];
+  const child = node.children[char];
+  if (!child) return false;
+  const shouldPruneChild = deleteWord(child, word, depth + 1);
+  if (shouldPruneChild) delete node.children[char];
+  return !node.isWord && Object.keys(node.children).length === 0;
+};
+
 export default function TrieView({ onBack }) {
   const [root, setRoot] = useState({
     char: '*', id: 'root', isWord: false,
@@ -56,11 +99,23 @@ export default function TrieView({ onBack }) {
 
   const [inputVal, setInputVal] = useState('');
   const [searchVal, setSearchVal] = useState('');
+  const [deleteVal, setDeleteVal] = useState('');
   const [lastAction, setLastAction] = useState('Trie initialized with "cat" and "dog"');
   const [highlightedNodes, setHighlightedNodes] = useState([]);
+  const [reasoningSteps, setReasoningSteps] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const { nodes, edges } = computeLayout(root);
+
+  const animateSteps = async (steps) => {
+    const visibleSteps = [];
+    for (const step of steps) {
+      visibleSteps.push(step.text);
+      setReasoningSteps([...visibleSteps]);
+      setHighlightedNodes(step.id ? [step.id] : []);
+      await sleep(360);
+    }
+  };
 
   const insertWord = async () => {
     const word = inputVal.toLowerCase().trim();
@@ -69,12 +124,10 @@ export default function TrieView({ onBack }) {
     setInputVal('');
     setLastAction(`Inserting "${word}"...`);
 
+    await animateSteps(trieDecisionSteps(root, word, 'insert'));
+
     let newRoot = JSON.parse(JSON.stringify(root));
     let curr = newRoot;
-    const highlights = ['root'];
-
-    setHighlightedNodes([...highlights]);
-    await sleep(400);
 
     let currentId = 'root';
     for (let i = 0; i < word.length; i++) {
@@ -84,15 +137,11 @@ export default function TrieView({ onBack }) {
       }
       curr = curr.children[char];
       currentId = curr.id;
-      
-      highlights.push(currentId);
-      setRoot(newRoot); 
-      setHighlightedNodes([...highlights]);
-      await sleep(400);
     }
     
     curr.isWord = true;
     setRoot(newRoot);
+    setReasoningSteps((steps) => [...steps, `'${word}' is now stored in the Trie.`]);
     setLastAction(`Inserted "${word}".`);
     setTimeout(() => setHighlightedNodes([]), 1000);
     setIsAnimating(false);
@@ -105,23 +154,19 @@ export default function TrieView({ onBack }) {
     setSearchVal('');
     setLastAction(`Searching for "${word}"...`);
 
+    await animateSteps(trieDecisionSteps(root, word, 'search'));
+
     let curr = root;
-    const highlights = ['root'];
-    setHighlightedNodes([...highlights]);
-    await sleep(400);
 
     for (let i = 0; i < word.length; i++) {
       const char = word[i];
       if (!curr.children[char]) {
         setLastAction(`"${word}" not found.`);
         setIsAnimating(false);
-        setTimeout(() => setHighlightedNodes([]), 1500);
+        setTimeout(() => setHighlightedNodes([]), 800);
         return;
       }
       curr = curr.children[char];
-      highlights.push(curr.id);
-      setHighlightedNodes([...highlights]);
-      await sleep(400);
     }
 
     if (curr.isWord) {
@@ -132,6 +177,44 @@ export default function TrieView({ onBack }) {
     
     setIsAnimating(false);
     setTimeout(() => setHighlightedNodes([]), 2000);
+  };
+
+  const deleteWordFromTrie = async () => {
+    const word = deleteVal.toLowerCase().trim();
+    if (!word || isAnimating) return;
+    setIsAnimating(true);
+    setDeleteVal('');
+    setLastAction(`Deleting "${word}"...`);
+    await animateSteps(trieDecisionSteps(root, word, 'delete'));
+
+    let current = root;
+    for (const char of word) {
+      if (!current.children[char]) {
+        setReasoningSteps((steps) => [...steps, `No deletion is performed because '${word}' is not stored.`]);
+        setLastAction(`"${word}" not found.`);
+        setHighlightedNodes([]);
+        setIsAnimating(false);
+        return;
+      }
+      current = current.children[char];
+    }
+
+    if (!current.isWord) {
+      setReasoningSteps((steps) => [...steps, `'${word}' is a prefix, not a stored word, so it is kept.`]);
+      setLastAction(`"${word}" is only a prefix.`);
+      setHighlightedNodes([]);
+      setIsAnimating(false);
+      return;
+    }
+
+    const nextRoot = JSON.parse(JSON.stringify(root));
+    deleteWord(nextRoot, word);
+    setRoot(nextRoot);
+    setReasoningSteps((steps) => [...steps, `Removed '${word}'. Any branch still used by another word remains in place.`]);
+    setLastAction(`Deleted "${word}".`);
+    await sleep(500);
+    setHighlightedNodes([]);
+    setIsAnimating(false);
   };
 
   return (
@@ -196,8 +279,10 @@ export default function TrieView({ onBack }) {
                 </AnimatePresence>
               </div>
             </div>
+
+            <TreeReasoningPanel steps={reasoningSteps} />
             
-            <div className="flex gap-4 mt-6 z-10 relative">
+            <div className="flex flex-wrap gap-4 mt-6 z-10 relative">
               <div className="flex items-center gap-2 flex-1 p-2 bg-surface-container-low rounded-xl border border-outline">
                 <input 
                   type="text" 
@@ -226,6 +311,21 @@ export default function TrieView({ onBack }) {
                   className="bg-surface border border-outline text-on-surface flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50"
                 >
                   <SearchIcon className="w-4 h-4" /> Search
+                </button>
+              </div>
+              <div className="flex items-center gap-2 flex-1 p-2 bg-surface-container-low rounded-xl border border-outline">
+                <input
+                  type="text"
+                  placeholder="Word"
+                  value={deleteVal}
+                  onChange={(event) => setDeleteVal(event.target.value)}
+                  className="w-24 bg-surface border border-outline rounded px-3 py-2 text-sm focus:border-error outline-none text-on-surface"
+                />
+                <button
+                  onClick={deleteWordFromTrie} disabled={isAnimating}
+                  className="bg-error/10 border border-error/30 text-error flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50"
+                >
+                  <Trash2 className="w-4 h-4" /> Delete
                 </button>
               </div>
             </div>

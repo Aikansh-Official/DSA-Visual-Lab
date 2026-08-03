@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Info, Plus, RefreshCw, Search as SearchIcon } from 'lucide-react';
+import { ArrowLeft, Info, Plus, RefreshCw, Search as SearchIcon, Trash2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import CodeBlock from './CodeBlock';
 import ComplexityCard from './ComplexityCard';
+import TreeReasoningPanel from './TreeReasoningPanel';
 import { treeSnippetSets } from '../codeSnippets';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -178,6 +179,196 @@ const levelOrderPath = (root, value, stopAtFirstOpenSlot = false) => {
   return path;
 };
 
+const findNode = (root, value) => {
+  if (!root) return null;
+  const queue = [root];
+  while (queue.length) {
+    const node = queue.shift();
+    if (node.val === value) return node;
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
+  }
+  return null;
+};
+
+const leftmostNode = (node) => {
+  let current = node;
+  while (current?.left) current = current.left;
+  return current;
+};
+
+const deleteBinaryTreeNode = (root, value) => {
+  if (!root) return null;
+  const queue = [{ node: root, parent: null, side: null }];
+  let target = null;
+  let deepest = queue[0];
+
+  while (queue.length) {
+    const current = queue.shift();
+    deepest = current;
+    if (current.node.val === value) target = current;
+    if (current.node.left) queue.push({ node: current.node.left, parent: current.node, side: 'left' });
+    if (current.node.right) queue.push({ node: current.node.right, parent: current.node, side: 'right' });
+  }
+
+  if (!target) return root;
+  if (target.node.id === deepest.node.id) return null;
+  target.node.val = deepest.node.val;
+  deepest.parent[deepest.side] = null;
+  return root;
+};
+
+const deleteBst = (node, value) => {
+  if (!node) return null;
+  if (value < node.val) node.left = deleteBst(node.left, value);
+  else if (value > node.val) node.right = deleteBst(node.right, value);
+  else {
+    if (!node.left) return node.right;
+    if (!node.right) return node.left;
+    const successor = leftmostNode(node.right);
+    node.val = successor.val;
+    node.right = deleteBst(node.right, successor.val);
+  }
+  return node;
+};
+
+const deleteAvl = (node, value) => {
+  if (!node) return null;
+  if (value < node.val) node.left = deleteAvl(node.left, value);
+  else if (value > node.val) node.right = deleteAvl(node.right, value);
+  else {
+    if (!node.left) return node.right;
+    if (!node.right) return node.left;
+    const successor = leftmostNode(node.right);
+    node.val = successor.val;
+    node.right = deleteAvl(node.right, successor.val);
+  }
+
+  refreshAvlMetadata(node);
+  if (node.balance > 1 && (node.left?.balance || 0) >= 0) return rotateRight(node);
+  if (node.balance > 1 && (node.left?.balance || 0) < 0) {
+    node.left = rotateLeft(node.left);
+    return rotateRight(node);
+  }
+  if (node.balance < -1 && (node.right?.balance || 0) <= 0) return rotateLeft(node);
+  if (node.balance < -1 && (node.right?.balance || 0) > 0) {
+    node.right = rotateRight(node.right);
+    return rotateLeft(node);
+  }
+  return node;
+};
+
+const fixRedBlack = (node) => {
+  if (isRed(node.right)) node = rotateLeftRedBlack(node);
+  if (isRed(node.left) && isRed(node.left.left)) node = rotateRightRedBlack(node);
+  if (isRed(node.left) && isRed(node.right)) flipColors(node);
+  return refreshAvlMetadata(node);
+};
+
+const moveRedLeft = (node) => {
+  flipColors(node);
+  if (isRed(node.right?.left)) {
+    node.right = rotateRightRedBlack(node.right);
+    node = rotateLeftRedBlack(node);
+    flipColors(node);
+  }
+  return node;
+};
+
+const moveRedRight = (node) => {
+  flipColors(node);
+  if (isRed(node.left?.left)) {
+    node = rotateRightRedBlack(node);
+    flipColors(node);
+  }
+  return node;
+};
+
+const deleteRedBlackMinimum = (node) => {
+  if (!node.left) return null;
+  if (!isRed(node.left) && !isRed(node.left.left)) node = moveRedLeft(node);
+  node.left = deleteRedBlackMinimum(node.left);
+  return fixRedBlack(node);
+};
+
+const deleteRedBlack = (node, value) => {
+  if (value < node.val) {
+    if (node.left) {
+      if (!isRed(node.left) && !isRed(node.left.left)) node = moveRedLeft(node);
+      node.left = deleteRedBlack(node.left, value);
+    }
+  } else {
+    if (isRed(node.left)) node = rotateRightRedBlack(node);
+    if (value === node.val && !node.right) return null;
+    if (node.right) {
+      if (!isRed(node.right) && !isRed(node.right.left)) node = moveRedRight(node);
+      if (value === node.val) {
+        const successor = leftmostNode(node.right);
+        node.val = successor.val;
+        node.right = deleteRedBlackMinimum(node.right);
+      } else {
+        node.right = deleteRedBlack(node.right, value);
+      }
+    }
+  }
+  return fixRedBlack(node);
+};
+
+const decisionSteps = (root, value, type, operation) => {
+  if (!root) return [{ id: null, text: 'The tree is empty, so there is no existing node to inspect.' }];
+  const steps = [];
+
+  if (type === 'Binary Tree') {
+    const queue = [root];
+    while (queue.length) {
+      const node = queue.shift();
+      if (node.val === value) {
+        steps.push({ id: node.id, text: `Visit ${node.val}. It matches the requested value, so this is the target node.` });
+        break;
+      }
+      if (operation === 'insert' && (!node.left || !node.right)) {
+        const slot = !node.left ? 'left' : 'right';
+        steps.push({ id: node.id, text: `Visit ${node.val}. A plain Binary Tree has no smaller-left rule, so we fill level by level. Its ${slot} child is the first open slot.` });
+        break;
+      }
+      steps.push({ id: node.id, text: `Visit ${node.val}. It is not the target${operation === 'insert' ? ' and already has two children' : ''}, so continue across this level from left to right.` });
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    return steps;
+  }
+
+  let node = root;
+  while (node) {
+    if (node.val === value) {
+      steps.push({ id: node.id, text: `Compare ${value} with ${node.val}. They match, so this is the target node.` });
+      break;
+    }
+    const direction = value < node.val ? 'left' : 'right';
+    const reason = value < node.val ? 'smaller' : 'larger';
+    const next = node[direction];
+    steps.push({ id: node.id, text: `Compare ${value} with ${node.val}. ${value} is ${reason}, so move ${direction} to preserve the search-tree order.` });
+    if (!next) {
+      steps.push({ id: node.id, text: operation === 'insert' ? `The ${direction} child of ${node.val} is empty, so ${value} belongs exactly there.` : `There is no ${direction} child to inspect, so ${value} is not in this tree.` });
+      break;
+    }
+    node = next;
+  }
+
+  return steps;
+};
+
+const deleteConclusion = (root, value, type) => {
+  const target = findNode(root, value);
+  if (!target) return 'No deletion is performed because the value was not found.';
+  if (type === 'Binary Tree') return 'Replace the target with the deepest, rightmost node, then remove that deepest node to keep the tree compact.';
+  if (!target.left && !target.right) return 'The target is a leaf, so it can be removed directly.';
+  if (!target.left || !target.right) return 'The target has one child, so that child takes the target’s place.';
+  if (type === 'AVL Tree') return 'The target has two children, so use its inorder successor, then update heights and rotate if the balance factor requires it.';
+  if (type === 'Red-Black Tree') return 'The target has two children, so use its inorder successor, then rebalance with color moves, rotations, and recoloring.';
+  return 'The target has two children, so replace it with its inorder successor: the smallest value in its right subtree.';
+};
+
 const buildInitialTree = (type) => {
   const values = [50, 25, 75, 10, 35, 60, 90];
   let root = null;
@@ -248,15 +439,20 @@ export default function BinaryTreeView({ type, onBack }) {
   const [root, setRoot] = useState(() => buildInitialTree(type));
   const [insertVal, setInsertVal] = useState('');
   const [searchVal, setSearchVal] = useState('');
+  const [deleteVal, setDeleteVal] = useState('');
   const [lastAction, setLastAction] = useState('Tree initialized');
   const [highlightedNodes, setHighlightedNodes] = useState([]);
+  const [reasoningSteps, setReasoningSteps] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const { nodes, edges } = getLayout(root);
   const details = treeDetails[type];
 
-  const animatePath = async (path) => {
-    for (const nodeId of path) {
-      setHighlightedNodes([nodeId]);
+  const animateSteps = async (steps) => {
+    const visibleSteps = [];
+    for (const step of steps) {
+      visibleSteps.push(step.text);
+      setReasoningSteps([...visibleSteps]);
+      setHighlightedNodes(step.id ? [step.id] : []);
       await sleep(380);
     }
   };
@@ -272,11 +468,7 @@ export default function BinaryTreeView({ type, onBack }) {
     setIsAnimating(true);
     setInsertVal('');
     setLastAction(`Finding the correct position for ${value}...`);
-
-    const path = type === 'Binary Tree'
-      ? levelOrderPath(root, value, true)
-      : orderedPath(root, value);
-    await animatePath(path);
+    await animateSteps(decisionSteps(root, value, type, 'insert'));
 
     const nextTree = cloneTree(root);
     const id = `node-${value}-${Date.now()}`;
@@ -291,7 +483,13 @@ export default function BinaryTreeView({ type, onBack }) {
 
     setRoot(updatedTree);
     setHighlightedNodes([id]);
-    setLastAction(`Inserted ${value}${type === 'AVL Tree' ? ' and rebalanced the tree.' : '.'}`);
+    const balancingNote = type === 'AVL Tree'
+      ? 'The AVL balance factors were updated and any required rotation was applied.'
+      : type === 'Red-Black Tree'
+        ? 'The new node was balanced with the Red-Black color and rotation rules.'
+        : `Inserted ${value}.`;
+    setReasoningSteps((steps) => [...steps, balancingNote]);
+    setLastAction(`Inserted ${value}${type === 'AVL Tree' ? ' and checked balance.' : '.'}`);
     await sleep(450);
     setHighlightedNodes([]);
     setIsAnimating(false);
@@ -304,15 +502,48 @@ export default function BinaryTreeView({ type, onBack }) {
     setIsAnimating(true);
     setSearchVal('');
     setLastAction(`Searching for ${value}...`);
-
-    const path = type === 'Binary Tree'
-      ? levelOrderPath(root, value)
-      : orderedPath(root, value);
-    await animatePath(path);
+    await animateSteps(decisionSteps(root, value, type, 'search'));
 
     const found = containsValue(root, value);
+    setReasoningSteps((steps) => [...steps, found ? `Search complete: ${value} was found.` : `Search complete: ${value} was not found.`]);
     setLastAction(found ? `Found ${value}!` : `${value} is not in the tree.`);
     await sleep(650);
+    setHighlightedNodes([]);
+    setIsAnimating(false);
+  };
+
+  const deleteNode = async () => {
+    const value = Number.parseInt(deleteVal, 10);
+    if (Number.isNaN(value) || isAnimating) return;
+
+    setIsAnimating(true);
+    setDeleteVal('');
+    setLastAction(`Finding ${value} before deletion...`);
+    await animateSteps(decisionSteps(root, value, type, 'delete'));
+
+    if (!containsValue(root, value)) {
+      setReasoningSteps((steps) => [...steps, 'No deletion is performed because the value was not found.']);
+      setLastAction(`${value} is not in the tree.`);
+      setHighlightedNodes([]);
+      setIsAnimating(false);
+      return;
+    }
+
+    setReasoningSteps((steps) => [...steps, deleteConclusion(root, value, type)]);
+    const nextTree = cloneTree(root);
+    let updatedTree = nextTree;
+    if (type === 'Binary Tree') updatedTree = deleteBinaryTreeNode(nextTree, value);
+    if (type === 'Binary Search Tree') updatedTree = deleteBst(nextTree, value);
+    if (type === 'AVL Tree') updatedTree = deleteAvl(nextTree, value);
+    if (type === 'Red-Black Tree') {
+      if (!isRed(nextTree.left) && !isRed(nextTree.right)) nextTree.color = 'red';
+      updatedTree = deleteRedBlack(nextTree, value);
+      if (updatedTree) updatedTree.color = 'black';
+    }
+
+    setRoot(updatedTree);
+    setLastAction(`Deleted ${value}.`);
+    await sleep(500);
     setHighlightedNodes([]);
     setIsAnimating(false);
   };
@@ -388,7 +619,9 @@ export default function BinaryTreeView({ type, onBack }) {
               </div>
             </div>
 
-            <div className="flex gap-4 mt-6 z-10 relative">
+            <TreeReasoningPanel steps={reasoningSteps} />
+
+            <div className="flex flex-wrap gap-4 mt-6 z-10 relative">
               <div className="flex items-center gap-2 flex-1 p-2 bg-surface-container-low rounded-xl border border-outline">
                 <input type="number" placeholder="Value" value={insertVal} onChange={(event) => setInsertVal(event.target.value)} className="w-20 bg-surface border border-outline rounded px-3 py-2 text-sm focus:border-primary outline-none text-on-surface" />
                 <button onClick={insertNode} disabled={isAnimating} className="bg-primary text-white flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50">
@@ -399,6 +632,12 @@ export default function BinaryTreeView({ type, onBack }) {
                 <input type="number" placeholder="Target" value={searchVal} onChange={(event) => setSearchVal(event.target.value)} className="w-20 bg-surface border border-outline rounded px-3 py-2 text-sm focus:border-primary outline-none text-on-surface" />
                 <button onClick={searchNode} disabled={isAnimating} className="bg-surface border border-outline text-on-surface flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50">
                   <SearchIcon className="w-4 h-4" /> Search
+                </button>
+              </div>
+              <div className="flex items-center gap-2 flex-1 p-2 bg-surface-container-low rounded-xl border border-outline">
+                <input type="number" placeholder="Target" value={deleteVal} onChange={(event) => setDeleteVal(event.target.value)} className="w-20 bg-surface border border-outline rounded px-3 py-2 text-sm focus:border-error outline-none text-on-surface" />
+                <button onClick={deleteNode} disabled={isAnimating} className="bg-error/10 border border-error/30 text-error flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50">
+                  <Trash2 className="w-4 h-4" /> Delete
                 </button>
               </div>
             </div>

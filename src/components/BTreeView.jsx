@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Info, Plus, RefreshCw, Search as SearchIcon } from 'lucide-react';
+import { ArrowLeft, Info, Plus, RefreshCw, Search as SearchIcon, Trash2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import CodeBlock from './CodeBlock';
 import ComplexityCard from './ComplexityCard';
+import TreeReasoningPanel from './TreeReasoningPanel';
 import { treeSnippetSets } from '../codeSnippets';
 
 const MIN_DEGREE = 2;
@@ -88,6 +89,123 @@ const traversalPath = (root, value) => {
   return path;
 };
 
+const keyIndex = (node, value) => {
+  let index = 0;
+  while (index < node.keys.length && value > node.keys[index]) index += 1;
+  return index;
+};
+
+const predecessor = (node) => {
+  let current = node;
+  while (!isLeaf(current)) current = current.children[current.children.length - 1];
+  return current.keys[current.keys.length - 1];
+};
+
+const successor = (node) => {
+  let current = node;
+  while (!isLeaf(current)) current = current.children[0];
+  return current.keys[0];
+};
+
+const mergeChildren = (parent, index) => {
+  const child = parent.children[index];
+  const sibling = parent.children[index + 1];
+  child.keys.push(parent.keys[index], ...sibling.keys);
+  if (!isLeaf(child)) child.children.push(...sibling.children);
+  parent.keys.splice(index, 1);
+  parent.children.splice(index + 1, 1);
+  return child;
+};
+
+const borrowFromPrevious = (parent, index) => {
+  const child = parent.children[index];
+  const sibling = parent.children[index - 1];
+  child.keys.unshift(parent.keys[index - 1]);
+  if (!isLeaf(child)) child.children.unshift(sibling.children.pop());
+  parent.keys[index - 1] = sibling.keys.pop();
+};
+
+const borrowFromNext = (parent, index) => {
+  const child = parent.children[index];
+  const sibling = parent.children[index + 1];
+  child.keys.push(parent.keys[index]);
+  if (!isLeaf(child)) child.children.push(sibling.children.shift());
+  parent.keys[index] = sibling.keys.shift();
+};
+
+const fillChild = (parent, index) => {
+  if (index > 0 && parent.children[index - 1].keys.length >= MIN_DEGREE) {
+    borrowFromPrevious(parent, index);
+    return index;
+  }
+  if (index < parent.keys.length && parent.children[index + 1].keys.length >= MIN_DEGREE) {
+    borrowFromNext(parent, index);
+    return index;
+  }
+  return index < parent.keys.length ? (mergeChildren(parent, index), index) : (mergeChildren(parent, index - 1), index - 1);
+};
+
+const deleteKey = (node, value) => {
+  const index = keyIndex(node, value);
+
+  if (index < node.keys.length && node.keys[index] === value) {
+    if (isLeaf(node)) {
+      node.keys.splice(index, 1);
+      return;
+    }
+    if (node.children[index].keys.length >= MIN_DEGREE) {
+      const replacement = predecessor(node.children[index]);
+      node.keys[index] = replacement;
+      deleteKey(node.children[index], replacement);
+      return;
+    }
+    if (node.children[index + 1].keys.length >= MIN_DEGREE) {
+      const replacement = successor(node.children[index + 1]);
+      node.keys[index] = replacement;
+      deleteKey(node.children[index + 1], replacement);
+      return;
+    }
+    deleteKey(mergeChildren(node, index), value);
+    return;
+  }
+
+  if (isLeaf(node)) return;
+  let childIndex = index;
+  if (node.children[childIndex].keys.length < MIN_DEGREE) childIndex = fillChild(node, childIndex);
+  deleteKey(node.children[childIndex], value);
+};
+
+const deleteValue = (root, value) => {
+  if (!root) return null;
+  deleteKey(root, value);
+  if (root.keys.length === 0) return root.children[0] || null;
+  return root;
+};
+
+const decisionSteps = (root, value, operation) => {
+  if (!root) return [{ id: null, text: 'The B-Tree is empty, so there is no key to inspect.' }];
+  const steps = [];
+  let node = root;
+
+  while (node) {
+    const index = keyIndex(node, value);
+    if (node.keys[index] === value) {
+      steps.push({ id: node.id, text: `Inspect keys [${node.keys.join(', ')}]. ${value} matches a key in this node.` });
+      break;
+    }
+    if (isLeaf(node)) {
+      steps.push({ id: node.id, text: operation === 'insert' ? `Inspect leaf keys [${node.keys.join(', ')}]. ${value} is placed here in sorted order.` : `Inspect leaf keys [${node.keys.join(', ')}]. ${value} is not present, so the operation stops.` });
+      break;
+    }
+    const lower = node.keys[index - 1];
+    const upper = node.keys[index];
+    const range = lower === undefined ? `smaller than ${upper}` : upper === undefined ? `larger than ${lower}` : `between ${lower} and ${upper}`;
+    steps.push({ id: node.id, text: `Inspect keys [${node.keys.join(', ')}]. ${value} is ${range}, so follow child ${index + 1}.` });
+    node = node.children[index];
+  }
+  return steps;
+};
+
 const getLayout = (root) => {
   if (!root) return { nodes: [], edges: [] };
   const nodes = [];
@@ -120,14 +238,19 @@ export default function BTreeView({ onBack }) {
   const [root, setRoot] = useState(buildInitialTree);
   const [insertVal, setInsertVal] = useState('');
   const [searchVal, setSearchVal] = useState('');
+  const [deleteVal, setDeleteVal] = useState('');
   const [lastAction, setLastAction] = useState('B-Tree initialized (minimum degree 2)');
   const [highlightedNodes, setHighlightedNodes] = useState([]);
+  const [reasoningSteps, setReasoningSteps] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const { nodes, edges } = getLayout(root);
 
-  const animatePath = async (path) => {
-    for (const nodeId of path) {
-      setHighlightedNodes([nodeId]);
+  const animateSteps = async (steps) => {
+    const visibleSteps = [];
+    for (const step of steps) {
+      visibleSteps.push(step.text);
+      setReasoningSteps([...visibleSteps]);
+      setHighlightedNodes(step.id ? [step.id] : []);
       await sleep(380);
     }
   };
@@ -143,14 +266,15 @@ export default function BTreeView({ onBack }) {
     setIsAnimating(true);
     setInsertVal('');
     setLastAction(`Finding the correct B-Tree node for ${value}...`);
-    await animatePath(traversalPath(root, value));
+    await animateSteps(decisionSteps(root, value, 'insert'));
 
     const nextRoot = cloneTree(root);
     let sequence = 0;
     const makeId = () => `b-${Date.now()}-${sequence++}`;
     const updatedRoot = insertValue(nextRoot, value, makeId);
     setRoot(updatedRoot);
-    setLastAction(`Inserted ${value}. Full nodes split around their middle key.`);
+    setReasoningSteps((steps) => [...steps, 'If the destination node is full, its middle key moves up and the remaining keys split into two child nodes.']);
+    setLastAction(`Inserted ${value}.`);
     setHighlightedNodes([]);
     setIsAnimating(false);
   };
@@ -161,9 +285,37 @@ export default function BTreeView({ onBack }) {
     setIsAnimating(true);
     setSearchVal('');
     setLastAction(`Searching for ${value}...`);
-    await animatePath(traversalPath(root, value));
-    setLastAction(hasValue(root, value) ? `Found ${value}!` : `${value} is not in the B-Tree.`);
+    await animateSteps(decisionSteps(root, value, 'search'));
+    const found = hasValue(root, value);
+    setReasoningSteps((steps) => [...steps, found ? `Search complete: ${value} was found.` : `Search complete: ${value} was not found.`]);
+    setLastAction(found ? `Found ${value}!` : `${value} is not in the B-Tree.`);
     await sleep(650);
+    setHighlightedNodes([]);
+    setIsAnimating(false);
+  };
+
+  const deleteNode = async () => {
+    const value = Number.parseInt(deleteVal, 10);
+    if (Number.isNaN(value) || isAnimating) return;
+
+    setIsAnimating(true);
+    setDeleteVal('');
+    setLastAction(`Finding ${value} before deletion...`);
+    await animateSteps(decisionSteps(root, value, 'delete'));
+
+    if (!hasValue(root, value)) {
+      setReasoningSteps((steps) => [...steps, 'No deletion is performed because the key was not found.']);
+      setLastAction(`${value} is not in the B-Tree.`);
+      setHighlightedNodes([]);
+      setIsAnimating(false);
+      return;
+    }
+
+    setReasoningSteps((steps) => [...steps, 'If removing this key would make a child too small, the B-Tree borrows from a sibling or merges nodes to preserve its minimum size rule.']);
+    const updatedRoot = deleteValue(cloneTree(root), value);
+    setRoot(updatedRoot);
+    setLastAction(`Deleted ${value}.`);
+    await sleep(500);
     setHighlightedNodes([]);
     setIsAnimating(false);
   };
@@ -209,7 +361,9 @@ export default function BTreeView({ onBack }) {
               </div>
             </div>
 
-            <div className="flex gap-4 mt-6 z-10 relative">
+            <TreeReasoningPanel steps={reasoningSteps} />
+
+            <div className="flex flex-wrap gap-4 mt-6 z-10 relative">
               <div className="flex items-center gap-2 flex-1 p-2 bg-surface-container-low rounded-xl border border-outline">
                 <input type="number" placeholder="Value" value={insertVal} onChange={(event) => setInsertVal(event.target.value)} className="w-20 bg-surface border border-outline rounded px-3 py-2 text-sm focus:border-primary outline-none text-on-surface" />
                 <button onClick={insertNode} disabled={isAnimating} className="bg-primary text-white flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50"><Plus className="w-4 h-4" /> Insert</button>
@@ -217,6 +371,10 @@ export default function BTreeView({ onBack }) {
               <div className="flex items-center gap-2 flex-1 p-2 bg-surface-container-low rounded-xl border border-outline">
                 <input type="number" placeholder="Target" value={searchVal} onChange={(event) => setSearchVal(event.target.value)} className="w-20 bg-surface border border-outline rounded px-3 py-2 text-sm focus:border-primary outline-none text-on-surface" />
                 <button onClick={searchNode} disabled={isAnimating} className="bg-surface border border-outline text-on-surface flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50"><SearchIcon className="w-4 h-4" /> Search</button>
+              </div>
+              <div className="flex items-center gap-2 flex-1 p-2 bg-surface-container-low rounded-xl border border-outline">
+                <input type="number" placeholder="Target" value={deleteVal} onChange={(event) => setDeleteVal(event.target.value)} className="w-20 bg-surface border border-outline rounded px-3 py-2 text-sm focus:border-error outline-none text-on-surface" />
+                <button onClick={deleteNode} disabled={isAnimating} className="bg-error/10 border border-error/30 text-error flex-1 py-2 rounded-lg text-sm font-bold flex justify-center items-center gap-2 transition-colors disabled:opacity-50"><Trash2 className="w-4 h-4" /> Delete</button>
               </div>
             </div>
           </div>

@@ -1,0 +1,76 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [ref=e13]
+    - generic [ref=e14]:
+      - button "Switch to light mode" [ref=e161]
+      - button "Start Learning" [ref=e18]
+  - main [ref=e20]:
+    - generic [ref=e440]:
+      - generic [ref=e441]:
+        - button "Back to tree types" [ref=e442]
+        - generic [ref=e445]:
+          - heading "Binary Search Tree Visualizer" [level=2] [ref=e446]
+          - paragraph [ref=e447]: Interactive Sandbox
+      - generic [ref=e448]:
+        - generic [ref=e450]:
+          - generic [ref=e451]:
+            - generic [ref=e452]: "Status: Tree initialized"
+            - button "Clear" [ref=e453]
+          - generic [ref=e460]:
+            - generic: "50"
+            - generic: "25"
+            - generic: "10"
+            - generic: "35"
+            - generic: "75"
+            - generic: "60"
+            - generic: "90"
+          - generic [ref=e461]:
+            - heading "Behind the Scenes" [level=3] [ref=e467]
+            - paragraph [ref=e468]: Choose an operation to see the exact decisions the tree makes.
+          - generic [ref=e469]:
+            - generic [ref=e470]:
+              - spinbutton "Value" [ref=e471]
+              - button "Insert" [ref=e472]
+            - generic [ref=e474]:
+              - spinbutton "Target" [ref=e475]
+              - button "Search" [ref=e476]
+            - generic [ref=e480]:
+              - spinbutton "Target" [ref=e481]
+              - button "Delete" [ref=e482]
+        - generic [ref=e486]:
+          - generic [ref=e487]:
+            - heading "Tree Mechanics" [level=3] [ref=e491]
+            - paragraph [ref=e492]: A BST keeps smaller values in the left subtree and larger values in the right subtree. The visualizer follows those comparisons for search and insertion.
+          - generic [ref=e493]:
+            - generic [ref=e494]:
+              - heading "Insertion and Search" [level=4] [ref=e495]
+              - paragraph [ref=e496]: Balanced trees are fast; a skewed BST can reach O(n).
+            - generic [ref=e497]: O(log n) expected
+          - generic [ref=e498]:
+            - generic [ref=e499]:
+              - generic [ref=e500]:
+                - generic [ref=e501]: traverse.js
+                - button "Copy code" [ref=e502]
+              - generic [ref=e506]:
+                - button "JavaScript" [ref=e507]
+                - button "C" [ref=e508]
+                - button "C++" [ref=e509]
+                - button "Java" [ref=e510]
+            - code [ref=e513]: "function traverse(node, target) { if (!node) return null; if (node.val === target) return node; if (target < node.val) return traverse(node.left, target); return traverse(node.right, target); }"
+  - contentinfo [ref=e153]:
+    - generic [ref=e154]: DSA Visual Lab
+    - generic [ref=e155]:
+      - link "GitHub" [ref=e156] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e157] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e158] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e159] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e160]: © 2026 DSA Visual Lab. Engineered for precision.

@@ -1,0 +1,96 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [ref=e13]
+    - generic [ref=e14]:
+      - button "Switch to light mode" [active] [ref=e161]
+      - button "Start Learning" [ref=e18]
+  - main [ref=e20]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: Linear Data Structure
+          - heading "Stack Data Structure" [level=2] [ref=e26]
+          - paragraph [ref=e27]: Understand Last In, First Out (LIFO) using a stack of plates. A precise, linear data structure essential for parsing, backtracking, and memory management.
+        - img [ref=e33]:
+          - generic [ref=e35]: Plate 1
+          - generic [ref=e39]: Plate 2
+          - generic [ref=e43]: Plate 3
+          - generic [ref=e47]: Plate 4
+          - generic [ref=e51]: Plate 5
+          - generic [ref=e56]: TOP
+          - generic [ref=e58]: push()
+          - generic [ref=e59]: add to top
+          - generic [ref=e61]: pop()
+          - generic [ref=e62]: remove top
+          - generic [ref=e63]: LIFO mental model
+      - generic [ref=e64]:
+        - generic [ref=e66]:
+          - heading "Plate Stack Visualizer" [level=3] [ref=e71]
+          - generic [ref=e73]:
+            - generic [ref=e74]: Top
+            - generic [ref=e78]: Plate 3
+            - generic [ref=e79]: Plate 2
+            - generic [ref=e80]: Plate 1
+          - generic [ref=e81]:
+            - button "Push" [ref=e82]
+            - button "Pop" [ref=e86]
+            - button "Peek" [ref=e90]
+          - generic [ref=e94]: Status:Initialization
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - heading "The Core Idea" [level=3] [ref=e97]
+            - paragraph [ref=e98]: Imagine a stack of heavy plates in a cafeteria. You can only add a new plate to the top, and you can only remove the top plate. To reach the bottom plate, you must remove all the plates above it first.
+            - generic [ref=e99]:
+              - generic [ref=e100]:
+                - generic [ref=e101]: LIFO
+                - generic [ref=e102]: Last In, First Out
+              - generic [ref=e103]:
+                - generic [ref=e108]:
+                  - generic [ref=e109]: Push
+                  - generic [ref=e110]: Add item to top
+                - generic [ref=e115]:
+                  - generic [ref=e116]: Pop
+                  - generic [ref=e117]: Remove top item
+                - generic [ref=e122]:
+                  - generic [ref=e123]: Peek
+                  - generic [ref=e124]: View top item
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - generic [ref=e127]:
+                - generic [ref=e128]:
+                  - generic [ref=e129]: stack.js
+                  - button "Copy code" [ref=e130]
+                - generic [ref=e134]:
+                  - button "JavaScript" [ref=e135]
+                  - button "C" [ref=e136]
+                  - button "C++" [ref=e137]
+                  - button "Java" [ref=e138]
+              - code [ref=e141]: "class Stack { constructor() { this.items = []; } push(element) { this.items.push(element); } pop() { if (this.isEmpty()) return \"Underflow\"; return this.items.pop(); } peek() { return this.items[this.items.length - 1]; } isEmpty() { return this.items.length === 0; } }"
+            - generic [ref=e142]:
+              - generic [ref=e143]:
+                - generic [ref=e144]:
+                  - heading "Time Complexity" [level=4] [ref=e145]
+                  - paragraph [ref=e146]: Push, Pop, and Peek operations.
+                - generic [ref=e147]: O(1)
+              - generic [ref=e148]:
+                - generic [ref=e149]:
+                  - heading "Space Complexity" [level=4] [ref=e150]
+                  - paragraph [ref=e151]: For storing n elements.
+                - generic [ref=e152]: O(n)
+  - contentinfo [ref=e153]:
+    - generic [ref=e154]: DSA Visual Lab
+    - generic [ref=e155]:
+      - link "GitHub" [ref=e156] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e157] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e158] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e159] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e160]: © 2026 DSA Visual Lab. Engineered for precision.

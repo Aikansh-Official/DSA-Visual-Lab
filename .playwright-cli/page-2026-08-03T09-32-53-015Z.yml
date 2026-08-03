@@ -1,0 +1,85 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [ref=e13]
+    - button "Start Learning" [ref=e14]
+  - main [ref=e16]:
+    - generic [ref=e429]:
+      - generic [ref=e430]:
+        - button "Back to tree types" [ref=e431]
+        - generic [ref=e434]:
+          - heading "B-Tree Visualizer" [level=2] [ref=e435]
+          - paragraph [ref=e436]: 2-3-4 Tree Sandbox
+      - generic [ref=e437]:
+        - generic [ref=e439]:
+          - generic [ref=e440]:
+            - generic [ref=e441]: "Status: Finding 20 before deletion..."
+            - button "Clear" [ref=e442]
+          - generic [ref=e449]:
+            - generic [ref=e450]:
+              - generic [ref=e451]: "12"
+              - generic [ref=e452]: "40"
+              - generic [ref=e453]: "70"
+            - generic [ref=e454]: "5"
+            - generic [ref=e456]:
+              - generic [ref=e457]: "20"
+              - generic [ref=e458]: "30"
+            - generic [ref=e459]: "55"
+            - generic [ref=e461]:
+              - generic [ref=e462]: "80"
+              - generic [ref=e463]: "95"
+          - generic [ref=e464]:
+            - heading "Behind the Scenes" [level=3] [ref=e470]
+            - list [ref=e517]:
+              - listitem [ref=e518]:
+                - generic [ref=e519]: "1"
+                - generic [ref=e520]: Inspect keys [12, 40, 70]. 20 is between 12 and 40, so follow child 2.
+              - listitem [ref=e521]:
+                - generic [ref=e522]: "2"
+                - generic [ref=e523]: Inspect keys [20, 30]. 20 matches a key in this node.
+          - generic [ref=e472]:
+            - generic [ref=e473]:
+              - spinbutton "Value" [ref=e474]
+              - button "Insert" [disabled] [ref=e475]
+            - generic [ref=e477]:
+              - spinbutton "Target" [ref=e478]
+              - button "Search" [disabled] [ref=e479]
+            - generic [ref=e483]:
+              - spinbutton "Target" [ref=e484]
+              - button "Delete" [disabled] [ref=e485]
+        - generic [ref=e489]:
+          - generic [ref=e490]:
+            - heading "B-Tree Mechanics" [level=3] [ref=e494]
+            - paragraph [ref=e495]: Each node can store multiple sorted keys. When a node is full, its middle key moves up and the remaining keys split into two child nodes.
+          - generic [ref=e496]:
+            - generic [ref=e497]:
+              - heading "Insertion and Search" [level=4] [ref=e498]
+              - paragraph [ref=e499]: The height stays small because each node holds several keys.
+            - generic [ref=e500]: O(log n)
+          - generic [ref=e501]:
+            - generic [ref=e502]:
+              - generic [ref=e503]:
+                - generic [ref=e504]: bTree.js
+                - button "Copy code" [ref=e505]
+              - generic [ref=e509]:
+                - button "JavaScript" [ref=e510]
+                - button "C" [ref=e511]
+                - button "C++" [ref=e512]
+                - button "Java" [ref=e513]
+            - code [ref=e516]: "function insert(root, value) { if (root.keys.length === 2 * T - 1) { const nextRoot = new BTreeNode(false); nextRoot.children[0] = root; splitChild(nextRoot, 0); insertNonFull(nextRoot, value); return nextRoot; } insertNonFull(root, value); return root; } function splitChild(parent, index) { const full = parent.children[index]; const right = new BTreeNode(full.leaf); parent.keys.splice(index, 0, full.keys[T - 1]); right.keys = full.keys.splice(T); full.keys.length = T - 1; parent.children.splice(index + 1, 0, right); }"
+  - contentinfo [ref=e149]:
+    - generic [ref=e150]: DSA Visual Lab
+    - generic [ref=e151]:
+      - link "GitHub" [ref=e152] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e153] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e154] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e155] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e156]: © 2026 DSA Visual Lab. Engineered for precision.

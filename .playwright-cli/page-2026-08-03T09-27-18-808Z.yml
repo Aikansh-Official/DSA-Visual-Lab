@@ -1,0 +1,128 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "DSA Visual Lab" [level=1] [ref=e8]
+    - navigation [ref=e9]:
+      - button "Stacks" [ref=e10]
+      - button "Queues" [ref=e11]
+      - button "Arrays" [ref=e12]
+      - button "Trees" [active] [ref=e13]
+    - button "Start Learning" [ref=e14]
+  - main [ref=e16]:
+    - generic [ref=e158]:
+      - generic [ref=e159]:
+        - heading "Tree Architectures" [level=2] [ref=e160]
+        - paragraph [ref=e161]: Explore the hierarchical world of trees, from simple binary structures to self-balancing systems optimized for performance.
+      - generic [ref=e162]:
+        - generic [ref=e163] [cursor=pointer]:
+          - generic [ref=e164]:
+            - img [ref=e170]:
+              - generic [ref=e177]: A
+              - generic [ref=e180]: B
+              - generic [ref=e183]: C
+              - generic [ref=e186]: D
+              - generic [ref=e189]: E
+              - generic [ref=e192]: F
+              - generic [ref=e195]: G
+              - generic [ref=e198]: each node has at most two children
+            - generic [ref=e200]: O(n)
+          - generic [ref=e208]:
+            - heading "Binary Tree" [level=3] [ref=e209]
+            - paragraph [ref=e210]: A hierarchical structure where each node has at most two children, referred to as the left child and the right child.
+            - button "See Visualization" [ref=e211]
+        - generic [ref=e212] [cursor=pointer]:
+          - generic [ref=e213]:
+            - img [ref=e219]:
+              - generic [ref=e226]: "50"
+              - generic [ref=e229]: "25"
+              - generic [ref=e232]: "75"
+              - generic [ref=e235]: "10"
+              - generic [ref=e238]: "35"
+              - generic [ref=e241]: "60"
+              - generic [ref=e244]: "90"
+              - generic [ref=e247]: < parent
+              - generic [ref=e248]: "> parent"
+              - generic [ref=e249]: left smaller, right larger
+            - generic [ref=e251]: O(log n)
+          - generic [ref=e257]:
+            - heading "Binary Search Tree" [level=3] [ref=e258]
+            - paragraph [ref=e259]: A binary tree where the left child is smaller and the right child is larger than the parent node, optimized for searching.
+            - button "See Visualization" [ref=e260]
+        - generic [ref=e261] [cursor=pointer]:
+          - generic [ref=e262]:
+            - img [ref=e268]:
+              - generic [ref=e273]: "30"
+              - generic [ref=e276]: "20"
+              - generic [ref=e279]: "40"
+              - generic [ref=e282]: "10"
+              - generic [ref=e285]: "25"
+              - generic [ref=e289]: BF 0
+              - generic [ref=e290]: self-balancing by height
+            - generic [ref=e292]: O(log n)
+          - generic [ref=e299]:
+            - heading "AVL Tree" [level=3] [ref=e300]
+            - paragraph [ref=e301]: A self-balancing binary search tree where the heights of the two child subtrees of any node differ by at most one.
+            - button "See Visualization" [ref=e302]
+        - generic [ref=e303] [cursor=pointer]:
+          - generic [ref=e304]:
+            - img [ref=e310]:
+              - generic [ref=e315]: "40"
+              - generic [ref=e318]: "20"
+              - generic [ref=e321]: "60"
+              - generic [ref=e324]: "10"
+              - generic [ref=e327]: "30"
+              - generic [ref=e330]: color rules keep searches fast
+            - generic [ref=e332]: O(log n)
+          - generic [ref=e341]:
+            - heading "Red-Black Tree" [level=3] [ref=e342]
+            - paragraph [ref=e343]: A kind of self-balancing binary search tree where each node has an extra bit for denoting the color of the node.
+            - button "See Visualization" [ref=e344]
+        - generic [ref=e345] [cursor=pointer]:
+          - generic [ref=e346]:
+            - img [ref=e352]:
+              - generic [ref=e354]: "20"
+              - generic [ref=e355]: "40"
+              - generic [ref=e356]: "70"
+              - generic [ref=e357]:
+                - generic [ref=e360]: "5"
+                - generic [ref=e361]: "12"
+              - generic [ref=e362]:
+                - generic [ref=e364]: "30"
+                - generic [ref=e365]: "55"
+              - generic [ref=e366]:
+                - generic [ref=e369]: "80"
+                - generic [ref=e370]: "95"
+              - generic [ref=e371]: multi-key nodes for large indexes
+            - generic [ref=e373]: O(log n)
+          - generic [ref=e380]:
+            - heading "B-Tree" [level=3] [ref=e381]
+            - paragraph [ref=e382]: A self-balancing search tree in which each node can contain more than one key and can have more than two children.
+            - button "See Visualization" [ref=e383]
+        - generic [ref=e384] [cursor=pointer]:
+          - generic [ref=e385]:
+            - img [ref=e391]:
+              - generic [ref=e394]: "*"
+              - generic [ref=e397]: c
+              - generic [ref=e400]: a
+              - generic [ref=e403]: t
+              - generic [ref=e406]: d
+              - generic [ref=e409]: o
+              - generic [ref=e412]: g
+              - generic [ref=e415]: word end
+              - generic [ref=e416]: word end
+            - generic [ref=e418]: O(k)
+          - generic [ref=e425]:
+            - heading "Trie (Prefix Tree)" [level=3] [ref=e426]
+            - paragraph [ref=e427]: An ordered tree data structure used to store a dynamic set or associative array where the keys are usually strings.
+            - button "See Visualization" [ref=e428]
+  - contentinfo [ref=e149]:
+    - generic [ref=e150]: DSA Visual Lab
+    - generic [ref=e151]:
+      - link "GitHub" [ref=e152] [cursor=pointer]:
+        - /url: "#"
+      - link "Topics" [ref=e153] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact" [ref=e154] [cursor=pointer]:
+        - /url: "#"
+      - link "Practice" [ref=e155] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e156]: © 2026 DSA Visual Lab. Engineered for precision.
